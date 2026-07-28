@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Khớp — Ghép việc bằng AI, có giải thích</title>
+<meta name="description" content="Khớp dùng AI để tính tỷ lệ phù hợp giữa công việc và freelancer, và giải thích rõ lý do ghép nối — cho doanh nghiệp nhỏ và freelancer." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="#top">Khớp <span class="chip">AI</span></a>
+
+    <nav class="nav__center" aria-label="Điều hướng chính">
+      <a class="nav__link" href="#how">Cách hoạt động</a>
+      <a class="nav__link" href="#features">Tính năng</a>
+      <a class="nav__link" href="#freelancer">Dành cho Freelancer</a>
+    </nav>
+
+    <div class="nav__right">
+      <a class="nav__signin" href="#signin">Đăng nhập</a>
+      <button class="cmdk-trigger" id="cmdkTrigger" aria-haspopup="dialog" aria-controls="cmdk">
+        <span>Tìm nhanh</span><kbd>⌘K</kbd>
+      </button>
+      <a class="btn btn--primary" href="#dang-cong-viec">Đăng công việc</a>
+      <button class="nav__burger" id="burgerBtn" aria-expanded="false" aria-controls="mobilePanel" aria-label="Mở menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__mobile-panel" id="mobilePanel">
+    <a href="#how">Cách hoạt động</a>
+    <a href="#features">Tính năng</a>
+    <a href="#freelancer">Dành cho Freelancer</a>
+    <a href="#signin">Đăng nhập</a>
+    <a class="btn btn--primary" href="#dang-cong-viec">Đăng công việc</a>
+  </div>
+</header>
+
+<dialog class="cmdk" id="cmdk" aria-label="Tìm nhanh">
+  <div class="cmdk__input-row">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input class="cmdk__input" id="cmdkInput" type="text" placeholder="Đi tới phần, hoặc thực hiện một hành động…" autocomplete="off" />
+  </div>
+  <ul class="cmdk__list" id="cmdkList" role="listbox"></ul>
+</dialog>
+
+<main id="main">
+
+  <!-- ===================== Hero ===================== -->
+  <section class="hero container" id="top">
+    <div class="hero__inner">
+      <div>
+        <span class="hero__eyebrow">AI MATCHING · CÓ GIẢI THÍCH</span>
+        <h1 class="hero__title">Tỷ lệ phù hợp, kèm lý do rõ ràng.</h1>
+        <p class="hero__lede">AI đọc mô tả công việc và hồ sơ freelancer theo từng tiêu chí — kỹ năng, kinh nghiệm, ngân sách, thời gian — rồi tính ra điểm phù hợp kèm giải thích cụ thể. Không phải một con số mù mờ.</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#dang-cong-viec">Đăng công việc</a>
+          <a class="link-arrow" href="#freelancer">Tạo hồ sơ freelancer</a>
+        </div>
+      </div>
+
+      <div class="match-card reveal" style="--i:1" aria-hidden="true">
+        <div class="match-card__frame">
+          <span>MATCH_ANALYSIS</span>
+          <span class="match-card__status"><span class="dot"></span>94% PHÙ HỢP</span>
+        </div>
+        <div class="match-card__body">
+          <div class="match-card__meta">
+            <span class="job">Việc cần làm: Thiết kế lại giao diện web bán hàng</span>
+            <span class="who">Freelancer: Lan Đặng — UI/UX Designer</span>
+          </div>
+
+          <div class="match-card__score">
+            <span class="num" data-count-to="94">0</span>
+            <span class="label">% phù hợp<br/>với yêu cầu</span>
+          </div>
+
+          <div class="match-card__criteria">
+            <div class="criterion">
+              <div class="criterion__row"><span><strong>Kỹ năng</strong> — Figma, UI Design</span><span>6/6</span></div>
+              <div class="criterion__bar"><span data-fill="100"></span></div>
+            </div>
+            <div class="criterion">
+              <div class="criterion__row"><span><strong>Kinh nghiệm</strong> — 5 năm (yêu cầu 3+)</span><span>đạt</span></div>
+              <div class="criterion__bar"><span data-fill="100"></span></div>
+            </div>
+            <div class="criterion">
+              <div class="criterion__row"><span><strong>Ngân sách</strong> — đề xuất 18tr / 15–25tr</span><span>khớp</span></div>
+              <div class="criterion__bar"><span data-fill="90"></span></div>
+            </div>
+            <div class="criterion">
+              <div class="criterion__row"><span><strong>Múi giờ</strong> — chồng lấp 4h/ngày</span><span>72%</span></div>
+              <div class="criterion__bar"><span data-fill="72"></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="match-card__caption">Ví dụ minh hoạ — không phải dữ liệu người dùng thật.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== How it works (Workbench tour) ===================== -->
+  <section class="section container" id="how">
+    <div class="section__head reveal">
+      <h2>Cách hoạt động</h2>
+      <p>Ba bước, không qua trung gian tuyển dụng.</p>
+    </div>
+
+    <div class="steps">
+      <article class="step reveal">
+        <div class="step__text">
+          <span class="step__num">01</span>
+          <h3 class="step__title">Đăng mô tả công việc</h3>
+          <p class="step__copy">Doanh nghiệp mô tả việc cần làm bằng ngôn ngữ tự nhiên — không cần điền biểu mẫu tuyển dụng phức tạp.</p>
+        </div>
+        <div class="step__panel panel">
+          <div class="panel__frame"><span>Đăng việc</span><span>Minh hoạ</span></div>
+          <div class="panel__body jobform">
+            <div class="jobform__field"><span class="k">Tiêu đề</span><span class="v">Thiết kế lại giao diện web bán hàng</span></div>
+            <div class="jobform__field"><span class="k">Kỹ năng cần</span><div class="tag-row"><span class="tag">Figma</span><span class="tag">UI Design</span><span class="tag">E-commerce</span></div></div>
+            <div class="jobform__field"><span class="k">Ngân sách</span><span class="v">15–25 triệu ₫</span></div>
+            <div class="jobform__field"><span class="k">Thời hạn</span><span class="v">3 tuần</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="step reveal">
+        <div class="step__text">
+          <span class="step__num">02</span>
+          <h3 class="step__title">AI chấm điểm và xếp hạng</h3>
+          <p class="step__copy">AI so khớp hồ sơ freelancer với yêu cầu công việc, xếp hạng theo điểm phù hợp — cập nhật khi có freelancer mới ứng tuyển.</p>
+        </div>
+        <div class="step__panel panel">
+          <div class="panel__frame"><span>Freelancer phù hợp</span><span>Minh hoạ</span></div>
+          <div class="panel__body ranked-list">
+            <div class="ranked-row">
+              <span class="avatar">LĐ</span>
+              <span class="ranked-row__info"><span class="ranked-row__name">Lan Đặng</span><span class="ranked-row__role">UI/UX Designer</span></span>
+              <span class="ranked-row__score"><span class="pct">96%</span><span class="bar"><span data-fill="96"></span></span></span>
+            </div>
+            <div class="ranked-row">
+              <span class="avatar">MT</span>
+              <span class="ranked-row__info"><span class="ranked-row__name">Minh Trần</span><span class="ranked-row__role">Product Designer</span></span>
+              <span class="ranked-row__score"><span class="pct">88%</span><span class="bar"><span data-fill="88"></span></span></span>
+            </div>
+            <div class="ranked-row">
+              <span class="avatar">HN</span>
+              <span class="ranked-row__info"><span class="ranked-row__name">Huy Nguyễn</span><span class="ranked-row__role">Web Designer</span></span>
+              <span class="ranked-row__score"><span class="pct">81%</span><span class="bar"><span data-fill="81"></span></span></span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="step reveal">
+        <div class="step__text">
+          <span class="step__num">03</span>
+          <h3 class="step__title">Xem lý do và liên hệ trực tiếp</h3>
+          <p class="step__copy">Mỗi điểm số đi kèm lý do cụ thể — doanh nghiệp quyết định, AI không tự động chọn thay bạn.</p>
+        </div>
+        <div class="step__panel panel">
+          <div class="panel__frame"><span>Vì sao Lan Đặng khớp 96%</span><span>Minh hoạ</span></div>
+          <div class="panel__body explain-list">
+            <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Kỹ năng Figma</strong> — 5 năm kinh nghiệm, 12 dự án e-commerce đã hoàn thành.</span></div>
+            <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Ngân sách phù hợp</strong> — mức đề xuất nằm trong khoảng bạn đưa ra.</span></div>
+            <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Có thể bắt đầu trong tuần này</strong> — lịch trống khớp với thời hạn 3 tuần.</span></div>
+            <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Múi giờ lệch 3 giờ</strong> — vẫn chồng lấp 4 giờ làm việc mỗi ngày.</span></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== Dark band: methodology ===================== -->
+  <section class="section band-dark" id="method">
+    <div class="container">
+      <div class="section__head reveal">
+        <h2>Cách AI tính điểm phù hợp</h2>
+        <p>Không phải một con số ngẫu nhiên. Bốn tiêu chí, mỗi tiêu chí một trọng số, cộng lại thành điểm phù hợp cuối cùng.</p>
+      </div>
+
+      <div class="formula reveal">
+        <div class="weights">
+          <div class="weight-row">
+            <div class="weight-row__head"><span class="name">Kỹ năng &amp; portfolio</span><span class="pct" data-count-to="40">0</span></div>
+            <div class="weight-row__bar"><span data-fill="40"></span></div>
+          </div>
+          <div class="weight-row">
+            <div class="weight-row__head"><span class="name">Kinh nghiệm liên quan</span><span class="pct" data-count-to="25">0</span></div>
+            <div class="weight-row__bar"><span data-fill="25"></span></div>
+          </div>
+          <div class="weight-row">
+            <div class="weight-row__head"><span class="name">Ngân sách phù hợp</span><span class="pct" data-count-to="20">0</span></div>
+            <div class="weight-row__bar"><span data-fill="20"></span></div>
+          </div>
+          <div class="weight-row">
+            <div class="weight-row__head"><span class="name">Thời gian &amp; múi giờ</span><span class="pct" data-count-to="15">0</span></div>
+            <div class="weight-row__bar"><span data-fill="15"></span></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="formula__eq">điểm_phù_hợp = Σ (trọng_số × mức_khớp mỗi tiêu chí)</div>
+          <p class="formula__note">Trọng số có thể tinh chỉnh theo loại công việc — một job thiết kế và một job lập trình không cân đo giống nhau.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Features ===================== -->
+  <section class="section container" id="features">
+    <div class="section__head reveal">
+      <h2>Không phải hộp đen</h2>
+      <p>Mỗi phần của việc ghép nối đều có thể kiểm tra được.</p>
+    </div>
+
+    <div class="features-grid reveal">
+      <div class="feature-card feature-card--lead">
+        <span class="feature-card__index">01</span>
+        <h3>Giải thích cho từng kết quả</h3>
+        <p>Mỗi tỷ lệ phù hợp đi kèm lý do theo từng tiêu chí — không phải một con số không rõ căn cứ.</p>
+        <div class="tag-row">
+          <span class="tag">Kỹ năng: 5/5</span>
+          <span class="tag">Kinh nghiệm: đạt</span>
+          <span class="tag">Ngân sách: khớp</span>
+        </div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-card__index">02</span>
+        <h3>Chấm điểm đa tiêu chí</h3>
+        <p>Kỹ năng, kinh nghiệm, ngân sách, thời gian — không chỉ khớp từ khoá trong CV.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-card__index">03</span>
+        <h3>Hồ sơ freelancer có xác thực</h3>
+        <p>Portfolio, số năm kinh nghiệm và lịch sử dự án được kiểm chứng trước khi hiển thị.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-card__index">04</span>
+        <h3>Lọc theo ngân sách &amp; thời hạn</h3>
+        <p>Chỉ thấy freelancer thực sự vừa túi tiền và có thể bắt đầu đúng hạn.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-card__index">05</span>
+        <h3>Nhắn tin ngay trong nền tảng</h3>
+        <p>Trao đổi, gửi file và chốt hợp đồng mà không cần rời khỏi trang.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Dual audience ===================== -->
+  <section class="section container" id="audience">
+    <div class="section__head reveal">
+      <h2>Dành cho ai</h2>
+      <p>Khớp phục vụ cả hai phía của một cuộc thuê việc.</p>
+    </div>
+
+    <div class="split reveal">
+      <div class="audience audience--primary">
+        <span class="mono-tag">DÀNH CHO DOANH NGHIỆP</span>
+        <h3>Thuê đúng người, nhanh hơn</h3>
+        <ul class="audience__list">
+          <li>Đăng việc trong vài phút, không cần mô tả JD chuẩn HR</li>
+          <li>Nhận danh sách freelancer đã xếp hạng theo độ phù hợp</li>
+          <li>Xem lý do trước khi liên hệ — không mất thời gian phỏng vấn sai người</li>
+          <li>Chỉ trả phí khi hợp đồng được xác nhận</li>
+        </ul>
+        <a class="btn btn--primary" href="#dang-cong-viec">Đăng công việc</a>
+      </div>
+
+      <div class="audience" id="freelancer">
+        <span class="mono-tag">DÀNH CHO FREELANCER</span>
+        <h3>Được tìm thấy đúng việc bạn giỏi</h3>
+        <ul class="audience__list">
+          <li>Tạo hồ sơ một lần, AI tự động so khớp với việc mới đăng</li>
+          <li>Biết chính xác vì sao bạn được đề xuất — hoặc vì sao chưa</li>
+          <li>Không phải cạnh tranh bằng cách chào giá thấp nhất</li>
+          <li>Miễn phí tạo hồ sơ và ứng tuyển</li>
+        </ul>
+        <a class="btn btn--outline" href="#signup-freelancer">Tạo hồ sơ freelancer</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Pricing (honest) ===================== -->
+  <section class="section container" id="pricing">
+    <div class="section__head reveal">
+      <h2>Chi phí minh bạch</h2>
+      <p>Không phí ẩn, không bảng giá mù mờ.</p>
+    </div>
+
+    <div class="pricing-rows reveal">
+      <div class="pricing-row">
+        <span class="who">Freelancer</span>
+        <p>Miễn phí tạo hồ sơ, ứng tuyển và nhận đề xuất công việc.</p>
+      </div>
+      <div class="pricing-row">
+        <span class="who">Doanh nghiệp</span>
+        <p>Trả phí khi đăng việc hoặc hoa hồng khi thuê thành công. Không thu phí nếu chưa tìm được người phù hợp.</p>
+      </div>
+    </div>
+    <p class="pricing-note">Bảng giá chi tiết hiển thị trước khi bạn đăng việc — không có bước ẩn nào sau đó.</p>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="section container" id="faq">
+    <div class="section__head reveal">
+      <h2>Câu hỏi thường gặp</h2>
+    </div>
+
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary>AI tính tỷ lệ phù hợp như thế nào?</summary>
+        <p>AI so khớp mô tả công việc với hồ sơ freelancer theo bốn tiêu chí — kỹ năng, kinh nghiệm, ngân sách, thời gian — rồi tính điểm theo trọng số. Bạn luôn thấy chi tiết từng tiêu chí, không chỉ con số cuối cùng.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Dữ liệu công việc của tôi có được dùng để huấn luyện AI khác không?</summary>
+        <p>Không. Mô tả công việc và hồ sơ chỉ dùng để tính điểm phù hợp cho chính bạn, không chia sẻ cho bên thứ ba hay dùng để huấn luyện mô hình ngoài nền tảng.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Nếu freelancer được đề xuất cao nhất không phù hợp thì sao?</summary>
+        <p>Bạn xem toàn bộ danh sách đã xếp hạng, không chỉ gợi ý số một. Có thể liên hệ bất kỳ freelancer nào trong danh sách và xem lý do phù hợp của từng người.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Tôi có thể tự đăng bài mà không cần AI gợi ý không?</summary>
+        <p>Có. AI chỉ hỗ trợ xếp hạng và giải thích — bạn vẫn xem được toàn bộ freelancer đã ứng tuyển và tự quyết định.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Freelancer cần trả phí để xuất hiện trong kết quả không?</summary>
+        <p>Không. Thứ hạng chỉ dựa trên độ phù hợp với công việc, không phải freelancer nào trả phí cao hơn.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===================== Final CTA ===================== -->
+  <section class="cta-strip container" id="dang-cong-viec">
+    <h2>Sẵn sàng tìm freelancer phù hợp?</h2>
+    <div class="cta-strip__row">
+      <a class="btn btn--primary" href="#signup-business">Đăng công việc</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="container">
+  <div class="foot-mast">
+    <span class="wordmark">Khớp</span>
+    <span class="tagline">Ghép việc bằng AI, có giải thích.</span>
+    <div class="links">
+      <a href="#audience">Dành cho doanh nghiệp</a>
+      <a href="#freelancer">Dành cho Freelancer</a>
+      <a href="#privacy">Bảo mật dữ liệu</a>
+    </div>
+    <span class="copyright">© 2026 Khớp</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Sticky nav frost-on-scroll */
+  var nav = document.getElementById("nav");
+  var onScroll = function () {
+    nav.classList.toggle("is-scrolled", window.scrollY > 8);
+  };
+  document.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* Mobile nav disclosure */
+  var burger = document.getElementById("burgerBtn");
+  var panel = document.getElementById("mobilePanel");
+  burger.addEventListener("click", function () {
+    var open = panel.getAttribute("data-open") === "true";
+    panel.setAttribute("data-open", String(!open));
+    burger.setAttribute("aria-expanded", String(!open));
+  });
+
+  /* Reveal on scroll — one-shot */
+  var revealEls = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !reduced) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add("is-in"); });
+  }
+
+  /* Bar fills + number tick — fire once per element on viewport entry */
+  var fillTargets = document.querySelectorAll("[data-fill]");
+  var countTargets = document.querySelectorAll("[data-count-to]");
+
+  function animateCount(el) {
+    var target = parseInt(el.getAttribute("data-count-to"), 10);
+    if (reduced) { el.textContent = target; return; }
+    var start = null;
+    var duration = 900;
+    function step(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / duration, 1);
+      el.textContent = Math.round(target * p);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  if ("IntersectionObserver" in window) {
+    var io2 = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        if (el.hasAttribute("data-fill")) {
+          el.style.setProperty("--fill", parseInt(el.getAttribute("data-fill"), 10) / 100);
+        } else if (el.hasAttribute("data-count-to")) {
+          animateCount(el);
+        }
+        io2.unobserve(el);
+      });
+    }, { threshold: 0.4 });
+    fillTargets.forEach(function (el) { io2.observe(el); });
+    countTargets.forEach(function (el) { io2.observe(el); });
+  } else {
+    fillTargets.forEach(function (el) { el.style.setProperty("--fill", parseInt(el.getAttribute("data-fill"), 10) / 100); });
+    countTargets.forEach(function (el) { el.textContent = el.getAttribute("data-count-to"); });
+  }
+
+  /* Command palette */
+  var cmdk = document.getElementById("cmdk");
+  var cmdkTrigger = document.getElementById("cmdkTrigger");
+  var cmdkInput = document.getElementById("cmdkInput");
+  var cmdkList = document.getElementById("cmdkList");
+
+  var commands = [
+    { label: "Cách hoạt động", hint: "Phần", href: "#how" },
+    { label: "Tính năng", hint: "Phần", href: "#features" },
+    { label: "Dành cho Freelancer", hint: "Phần", href: "#freelancer" },
+    { label: "Chi phí", hint: "Phần", href: "#pricing" },
+    { label: "Câu hỏi thường gặp", hint: "Phần", href: "#faq" },
+    { label: "Đăng công việc", hint: "Hành động", href: "#dang-cong-viec" },
+    { label: "Tạo hồ sơ freelancer", hint: "Hành động", href: "#signup-freelancer" }
+  ];
+
+  var activeIndex = 0;
+
+  function renderList(filter) {
+    var q = (filter || "").trim().toLowerCase();
+    var matches = commands.filter(function (c) { return c.label.toLowerCase().indexOf(q) !== -1; });
+    cmdkList.innerHTML = "";
+    if (matches.length === 0) {
+      cmdkList.innerHTML = '<li class="cmdk__empty">Không tìm thấy mục nào.</li>';
+      return;
+    }
+    activeIndex = 0;
+    matches.forEach(function (c, i) {
+      var li = document.createElement("li");
+      li.setAttribute("role", "option");
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "cmdk__item";
+      btn.setAttribute("data-active", i === 0 ? "true" : "false");
+      btn.innerHTML = "<span>" + c.label + "</span><span class=\"mono-tag\">" + c.hint + "</span>";
+      btn.addEventListener("click", function () { go(c.href); });
+      li.appendChild(btn);
+      cmdkList.appendChild(li);
+    });
+  }
+
+  function go(href) {
+    cmdk.close();
+    var el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+  }
+
+  function openCmdk() {
+    renderList("");
+    cmdk.showModal();
+    cmdkInput.value = "";
+    cmdkInput.focus();
+  }
+
+  cmdkTrigger.addEventListener("click", openCmdk);
+  document.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      if (cmdk.open) { cmdk.close(); } else { openCmdk(); }
+    }
+  });
+  cmdk.addEventListener("click", function (e) {
+    if (e.target === cmdk) cmdk.close();
+  });
+  cmdkInput.addEventListener("input", function () { renderList(cmdkInput.value); });
+  cmdkInput.addEventListener("keydown", function (e) {
+    var items = cmdkList.querySelectorAll(".cmdk__item");
+    if (items.length === 0) return;
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      items[activeIndex].setAttribute("data-active", "false");
+      activeIndex = e.key === "ArrowDown"
+        ? (activeIndex + 1) % items.length
+        : (activeIndex - 1 + items.length) % items.length;
+      items[activeIndex].setAttribute("data-active", "true");
+      items[activeIndex].scrollIntoView({ block: "nearest" });
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      items[activeIndex].click();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
