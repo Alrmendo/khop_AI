@@ -32,6 +32,11 @@
   --color-accent-hover: oklch(38% 0.13 145);
   --color-backdrop:    oklch(19% 0.045 152 / 0.5);
 
+  /* — Color: secondary warm accent (terracotta) — match-result numbers + primary CTA only — */
+  --color-accent-2:      oklch(44% 0.16 40);
+  --color-accent-2-hover: oklch(35% 0.16 40);
+  --color-accent-2-soft:  oklch(78% 0.12 42);
+
   /* — Fonts — */
   --font-display: "Fraunces", ui-serif, Georgia, serif;
   --font-body:    "EB Garamond", ui-serif, Georgia, serif;

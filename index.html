@@ -318,27 +318,66 @@
       <h2>Câu hỏi thường gặp</h2>
     </div>
 
-    <div class="faq-list reveal">
-      <details class="faq-item">
-        <summary>AI tính tỷ lệ phù hợp như thế nào?</summary>
-        <p>AI so khớp mô tả công việc với hồ sơ freelancer theo bốn tiêu chí — kỹ năng, kinh nghiệm, ngân sách, thời gian — rồi tính điểm theo trọng số. Bạn luôn thấy chi tiết từng tiêu chí, không chỉ con số cuối cùng.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Dữ liệu công việc của tôi có được dùng để huấn luyện AI khác không?</summary>
-        <p>Không. Mô tả công việc và hồ sơ chỉ dùng để tính điểm phù hợp cho chính bạn, không chia sẻ cho bên thứ ba hay dùng để huấn luyện mô hình ngoài nền tảng.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Nếu freelancer được đề xuất cao nhất không phù hợp thì sao?</summary>
-        <p>Bạn xem toàn bộ danh sách đã xếp hạng, không chỉ gợi ý số một. Có thể liên hệ bất kỳ freelancer nào trong danh sách và xem lý do phù hợp của từng người.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Tôi có thể tự đăng bài mà không cần AI gợi ý không?</summary>
-        <p>Có. AI chỉ hỗ trợ xếp hạng và giải thích — bạn vẫn xem được toàn bộ freelancer đã ứng tuyển và tự quyết định.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Freelancer cần trả phí để xuất hiện trong kết quả không?</summary>
-        <p>Không. Thứ hạng chỉ dựa trên độ phù hợp với công việc, không phải freelancer nào trả phí cao hơn.</p>
-      </details>
+    <div class="faq-layout">
+      <div class="faq-list reveal">
+        <details class="faq-item">
+          <summary>AI tính tỷ lệ phù hợp như thế nào?</summary>
+          <p>AI so khớp mô tả công việc với hồ sơ freelancer theo bốn tiêu chí — kỹ năng, kinh nghiệm, ngân sách, thời gian — rồi tính điểm theo trọng số. Bạn luôn thấy chi tiết từng tiêu chí, không chỉ con số cuối cùng.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Dữ liệu công việc của tôi có được dùng để huấn luyện AI khác không?</summary>
+          <p>Không. Mô tả công việc và hồ sơ chỉ dùng để tính điểm phù hợp cho chính bạn, không chia sẻ cho bên thứ ba hay dùng để huấn luyện mô hình ngoài nền tảng.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Nếu freelancer được đề xuất cao nhất không phù hợp thì sao?</summary>
+          <p>Bạn xem toàn bộ danh sách đã xếp hạng, không chỉ gợi ý số một. Có thể liên hệ bất kỳ freelancer nào trong danh sách và xem lý do phù hợp của từng người.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Tôi có thể tự đăng bài mà không cần AI gợi ý không?</summary>
+          <p>Có. AI chỉ hỗ trợ xếp hạng và giải thích — bạn vẫn xem được toàn bộ freelancer đã ứng tuyển và tự quyết định.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Freelancer cần trả phí để xuất hiện trong kết quả không?</summary>
+          <p>Không. Thứ hạng chỉ dựa trên độ phù hợp với công việc, không phải freelancer nào trả phí cao hơn.</p>
+        </details>
+      </div>
+
+      <figure class="faq-illustration">
+        <svg class="faq-diagram" viewBox="0 0 280 290" role="img" aria-label="Sơ đồ minh hoạ: AI nối một công việc với một freelancer, đạt 94% phù hợp — ví dụ minh hoạ, không phải số liệu thật.">
+          <g class="faq-diagram__sprig" aria-hidden="true" transform="translate(232 12) rotate(16)">
+            <path class="faq-diagram__stem" d="M0 42 Q -2 22 1 2" />
+            <g transform="translate(-7 15) rotate(-26)"><ellipse class="faq-diagram__leaf" cx="0" cy="0" rx="4" ry="8" /></g>
+            <g transform="translate(7 28) rotate(24)"><ellipse class="faq-diagram__leaf" cx="0" cy="0" rx="4" ry="8" /></g>
+          </g>
+
+          <g class="faq-diagram__node" transform="rotate(-1.5 100 62)">
+            <rect class="faq-diagram__card" x="20" y="30" width="160" height="64" rx="12" />
+            <g class="faq-diagram__icon" transform="translate(38 46)">
+              <rect x="0" y="6" width="24" height="16" rx="3" />
+              <path d="M7 6 V4 a3 3 0 0 1 3 -3 h4 a3 3 0 0 1 3 3 V6" />
+              <line x1="0" y1="14" x2="24" y2="14" />
+            </g>
+            <text class="faq-diagram__label" x="76" y="66">Công việc</text>
+          </g>
+
+          <g class="faq-diagram__node" transform="rotate(1 180 222)">
+            <rect class="faq-diagram__card" x="100" y="190" width="160" height="64" rx="12" />
+            <g class="faq-diagram__icon" transform="translate(118 202)">
+              <circle cx="12" cy="8" r="6" />
+              <path d="M2 28 a10 10 0 0 1 20 0" />
+            </g>
+            <text class="faq-diagram__label" x="156" y="226">Freelancer</text>
+          </g>
+
+          <path class="faq-diagram__connector" d="M 100 94 Q 70 160 180 190" />
+
+          <g transform="translate(110 144)">
+            <circle class="faq-diagram__badge" r="30" />
+            <text class="faq-diagram__pct" x="0" y="7" text-anchor="middle">94%</text>
+          </g>
+        </svg>
+        <figcaption>Ví dụ minh hoạ — không phải dữ liệu người dùng thật.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -352,16 +391,29 @@
 
 </main>
 
-<footer class="container">
-  <div class="foot-mast">
-    <span class="wordmark">Khớp</span>
-    <span class="tagline">Ghép việc bằng AI, có giải thích.</span>
-    <div class="links">
-      <a href="#audience">Dành cho doanh nghiệp</a>
-      <a href="#freelancer">Dành cho Freelancer</a>
-      <a href="#privacy">Bảo mật dữ liệu</a>
+<footer class="foot-band">
+  <div class="container">
+    <div class="foot-mast">
+      <div class="foot-mast__brand">
+        <span class="wordmark">Khớp</span>
+        <span class="tagline">Ghép việc bằng AI, có giải thích.</span>
+      </div>
+
+      <nav class="foot-mast__links" aria-label="Liên kết footer">
+        <a href="#audience">Dành cho doanh nghiệp</a>
+        <a href="#freelancer">Dành cho Freelancer</a>
+        <a href="#privacy">Bảo mật dữ liệu</a>
+      </nav>
+
+      <div class="foot-mast__meta">
+        <svg class="foot-mast__sprig" viewBox="0 0 40 80" aria-hidden="true">
+          <path class="foot-mast__stem" d="M 20 76 Q 18 56 21 36 Q 22 22 20 8" />
+          <g transform="translate(8 38) rotate(-25)"><ellipse class="foot-mast__leaf" cx="0" cy="0" rx="6" ry="11" /></g>
+          <g transform="translate(28 52) rotate(30)"><ellipse class="foot-mast__leaf" cx="0" cy="0" rx="6" ry="11" /></g>
+        </svg>
+        <span class="copyright">© 2026 Khớp</span>
+      </div>
     </div>
-    <span class="copyright">© 2026 Khớp</span>
   </div>
 </footer>
 
@@ -440,6 +492,26 @@
   } else {
     fillTargets.forEach(function (el) { el.style.setProperty("--fill", parseInt(el.getAttribute("data-fill"), 10) / 100); });
     countTargets.forEach(function (el) { el.textContent = el.getAttribute("data-count-to"); });
+  }
+
+  /* FAQ diagram connector — draws itself once on scroll into view */
+  var connectors = document.querySelectorAll(".faq-diagram__connector");
+  connectors.forEach(function (path) {
+    var len = path.getTotalLength();
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = reduced ? 0 : len;
+    path.style.transition = reduced ? "none" : "stroke-dashoffset 1.3s cubic-bezier(0.16,1,0.3,1)";
+  });
+  if (connectors.length && "IntersectionObserver" in window && !reduced) {
+    var io3 = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.style.strokeDashoffset = "0";
+          io3.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    connectors.forEach(function (path) { io3.observe(path); });
   }
 
   /* Command palette */

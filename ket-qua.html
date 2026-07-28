@@ -1,0 +1,394 @@
+<!doctype html>
+<!-- Hallmark · additional page, same design system as index.html (Garden theme, Workbench macrostructure)
+   · genre: editorial · theme: Garden · nav: N1b shape (cross-page hrefs) · footer: Ft1 shape (dark botanical band)
+   · new components: results toolbar (sort/filter), result-card, reused .panel/.explain-list for reasoning
+   · pre-emit critique: P5 H4 E5 S4 R5 V4 -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Kết quả matching — Khớp</title>
+<meta name="description" content="Danh sách freelancer được AI xếp hạng theo tỷ lệ phù hợp cho một công việc — kèm giải thích lý do ghép nối theo từng tiêu chí. Dữ liệu minh hoạ." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">Khớp <span class="chip">AI</span></a>
+
+    <nav class="nav__center" aria-label="Điều hướng chính">
+      <a class="nav__link" href="index.html#how">Cách hoạt động</a>
+      <a class="nav__link" href="index.html#features">Tính năng</a>
+      <a class="nav__link" href="index.html#freelancer">Dành cho Freelancer</a>
+    </nav>
+
+    <div class="nav__right">
+      <a class="nav__signin" href="index.html#signin">Đăng nhập</a>
+      <button class="cmdk-trigger" id="cmdkTrigger" aria-haspopup="dialog" aria-controls="cmdk">
+        <span>Tìm nhanh</span><kbd>⌘K</kbd>
+      </button>
+      <a class="btn btn--primary" href="index.html#dang-cong-viec">Đăng công việc</a>
+      <button class="nav__burger" id="burgerBtn" aria-expanded="false" aria-controls="mobilePanel" aria-label="Mở menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__mobile-panel" id="mobilePanel">
+    <a href="index.html#how">Cách hoạt động</a>
+    <a href="index.html#features">Tính năng</a>
+    <a href="index.html#freelancer">Dành cho Freelancer</a>
+    <a href="index.html#signin">Đăng nhập</a>
+    <a class="btn btn--primary" href="index.html#dang-cong-viec">Đăng công việc</a>
+  </div>
+</header>
+
+<dialog class="cmdk" id="cmdk" aria-label="Tìm nhanh">
+  <div class="cmdk__input-row">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input class="cmdk__input" id="cmdkInput" type="text" placeholder="Đi tới phần, hoặc thực hiện một hành động…" autocomplete="off" />
+  </div>
+  <ul class="cmdk__list" id="cmdkList" role="listbox"></ul>
+</dialog>
+
+<main id="main">
+
+  <!-- ===================== Job summary ===================== -->
+  <section class="container page-head" id="job-summary">
+    <a class="link-back" href="index.html">← Quay lại trang chủ</a>
+
+    <span class="mono-tag">DỮ LIỆU MINH HOẠ</span>
+    <h1>Kết quả matching</h1>
+    <p>AI đã đọc mô tả công việc dưới đây và xếp hạng freelancer theo tỷ lệ phù hợp — cao đến thấp.</p>
+
+    <div class="panel job-summary-panel">
+      <div class="panel__frame"><span>Việc cần tìm freelancer</span><span>Minh hoạ</span></div>
+      <div class="panel__body jobform">
+        <div class="jobform__field"><span class="k">Tiêu đề</span><span class="v">Thiết kế lại giao diện web bán hàng</span></div>
+        <div class="jobform__field"><span class="k">Kỹ năng cần</span><div class="tag-row"><span class="tag">Figma</span><span class="tag">UI Design</span><span class="tag">E-commerce</span></div></div>
+        <div class="jobform__field"><span class="k">Ngân sách</span><span class="v">15–25 triệu ₫</span></div>
+        <div class="jobform__field"><span class="k">Thời hạn</span><span class="v">3 tuần</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Results ===================== -->
+  <section class="container results" id="results">
+    <div class="results__toolbar">
+      <p class="results__count"><strong>4</strong> freelancer phù hợp</p>
+      <div class="results__controls">
+        <label class="select-field">
+          <span>Sắp xếp</span>
+          <select id="sortSelect">
+            <option value="match-desc">% phù hợp — cao đến thấp</option>
+            <option value="budget-asc">Ngân sách — thấp đến cao</option>
+            <option value="budget-desc">Ngân sách — cao đến thấp</option>
+          </select>
+        </label>
+        <label class="checkbox-field">
+          <input type="checkbox" id="budgetFilter" />
+          <span>Chỉ trong ngân sách (15–25tr)</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="results__list" id="resultsList">
+
+      <article class="result-card" data-match="96" data-budget="18">
+        <header class="result-card__head">
+          <span class="avatar">LĐ</span>
+          <div class="result-card__who">
+            <span class="result-card__name">Lan Đặng</span>
+            <span class="result-card__role">UI/UX Designer</span>
+          </div>
+          <div class="result-card__score">
+            <span class="result-card__pct">96%</span>
+            <span class="result-card__pct-label">phù hợp</span>
+          </div>
+        </header>
+        <div class="result-card__meta">
+          <span>Đề xuất: 18 triệu ₫</span>
+          <span>Có thể bắt đầu: tuần này</span>
+        </div>
+        <details class="result-card__reason">
+          <summary class="result-card__toggle"><span>Xem lý do</span><span class="result-card__chevron" aria-hidden="true">+</span></summary>
+          <div class="panel result-card__panel">
+            <div class="panel__frame"><span>Vì sao Lan Đặng khớp 96%</span><span>Minh hoạ</span></div>
+            <div class="panel__body explain-list">
+              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Kỹ năng Figma</strong> — 5 năm kinh nghiệm, 12 dự án e-commerce đã hoàn thành.</span></div>
+              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Kinh nghiệm phù hợp</strong> — vượt mức tối thiểu 3 năm mà công việc yêu cầu.</span></div>
+              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Ngân sách phù hợp</strong> — mức đề xuất nằm trong khoảng 15–25 triệu.</span></div>
+              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Múi giờ lệch 3 giờ</strong> — vẫn chồng lấp 4 giờ làm việc mỗi ngày.</span></div>
+            </div>
+          </div>
+        </details>
+      </article>
+
+      <article class="result-card" data-match="88" data-budget="20">
+        <header class="result-card__head">
+          <span class="avatar">MT</span>
+          <div class="result-card__who">
+            <span class="result-card__name">Minh Trần</span>
+            <span class="result-card__role">Product Designer</span>
+          </div>
+          <div class="result-card__score">
+            <span class="result-card__pct">88%</span>
+            <span class="result-card__pct-label">phù hợp</span>
+          </div>
+        </header>
+        <div class="result-card__meta">
+          <span>Đề xuất: 20 triệu ₫</span>
+          <span>Có thể bắt đầu: sau 1 tuần</span>
+        </div>
+        <details class="result-card__reason">
+          <summary class="result-card__toggle"><span>Xem lý do</span><span class="result-card__chevron" aria-hidden="true">+</span></summary>
+          <div class="panel result-card__panel">
+            <div class="panel__frame"><span>Vì sao Minh Trần khớp 88%</span><span>Minh hoạ</span></div>
+            <div class="panel__body explain-list">
+              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Kỹ năng Figma &amp; UI Design</strong> — 5 dự án thương mại điện tử đã hoàn thành.</span></div>
+              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Kinh nghiệm đạt yêu cầu</strong> — 3 năm, đúng mức tối thiểu công việc đề ra.</span></div>
+              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Ngân sách phù hợp</strong> — đề xuất 20 triệu, vẫn trong khoảng 15–25 triệu.</span></div>
+              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Bắt đầu sau 1 tuần</strong> — trễ hơn so với các freelancer khác trong danh sách.</span></div>
+            </div>
+          </div>
+        </details>
+      </article>
+
+      <article class="result-card" data-match="81" data-budget="15">
+        <header class="result-card__head">
+          <span class="avatar">HN</span>
+          <div class="result-card__who">
+            <span class="result-card__name">Huy Nguyễn</span>
+            <span class="result-card__role">Web Designer</span>
+          </div>
+          <div class="result-card__score">
+            <span class="result-card__pct">81%</span>
+            <span class="result-card__pct-label">phù hợp</span>
+          </div>
+        </header>
+        <div class="result-card__meta">
+          <span>Đề xuất: 15 triệu ₫</span>
+          <span>Có thể bắt đầu: ngay</span>
+        </div>
+        <details class="result-card__reason">
+          <summary class="result-card__toggle"><span>Xem lý do</span><span class="result-card__chevron" aria-hidden="true">+</span></summary>
+          <div class="panel result-card__panel">
+            <div class="panel__frame"><span>Vì sao Huy Nguyễn khớp 81%</span><span>Minh hoạ</span></div>
+            <div class="panel__body explain-list">
+              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Kỹ năng Figma cơ bản</strong> — mới có 2 dự án e-commerce, ít hơn các ứng viên khác.</span></div>
+              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Kinh nghiệm 2 năm</strong> — dưới mức tối thiểu 3 năm mà công việc yêu cầu.</span></div>
+              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Ngân sách rất phù hợp</strong> — đề xuất 15 triệu, mức thấp nhất trong khoảng cho phép.</span></div>
+              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Có thể bắt đầu ngay</strong> — lịch trống khớp hoàn toàn với thời hạn 3 tuần.</span></div>
+            </div>
+          </div>
+        </details>
+      </article>
+
+      <article class="result-card" data-match="74" data-budget="27">
+        <header class="result-card__head">
+          <span class="avatar">TH</span>
+          <div class="result-card__who">
+            <span class="result-card__name">Đỗ Thu Hà</span>
+            <span class="result-card__role">UI Designer</span>
+          </div>
+          <div class="result-card__score">
+            <span class="result-card__pct">74%</span>
+            <span class="result-card__pct-label">phù hợp</span>
+          </div>
+        </header>
+        <div class="result-card__meta">
+          <span>Đề xuất: 27 triệu ₫</span>
+          <span>Có thể bắt đầu: sau 2 tuần</span>
+        </div>
+        <details class="result-card__reason">
+          <summary class="result-card__toggle"><span>Xem lý do</span><span class="result-card__chevron" aria-hidden="true">+</span></summary>
+          <div class="panel result-card__panel">
+            <div class="panel__frame"><span>Vì sao Đỗ Thu Hà khớp 74%</span><span>Minh hoạ</span></div>
+            <div class="panel__body explain-list">
+              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Chưa có dự án e-commerce</strong> — kỹ năng UI tốt nhưng chưa từng làm web bán hàng.</span></div>
+              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>4 năm kinh nghiệm</strong> — vượt mức tối thiểu công việc yêu cầu.</span></div>
+              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Ngân sách vượt khoảng</strong> — đề xuất 27 triệu, cao hơn mức 15–25 triệu.</span></div>
+              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Bắt đầu sau 2 tuần</strong> — vẫn kịp thời hạn 3 tuần của công việc.</span></div>
+            </div>
+          </div>
+        </details>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot-band">
+  <div class="container">
+    <div class="foot-mast">
+      <div class="foot-mast__brand">
+        <span class="wordmark">Khớp</span>
+        <span class="tagline">Ghép việc bằng AI, có giải thích.</span>
+      </div>
+
+      <nav class="foot-mast__links" aria-label="Liên kết footer">
+        <a href="index.html#audience">Dành cho doanh nghiệp</a>
+        <a href="index.html#freelancer">Dành cho Freelancer</a>
+        <a href="index.html#privacy">Bảo mật dữ liệu</a>
+      </nav>
+
+      <div class="foot-mast__meta">
+        <svg class="foot-mast__sprig" viewBox="0 0 40 80" aria-hidden="true">
+          <path class="foot-mast__stem" d="M 20 76 Q 18 56 21 36 Q 22 22 20 8" />
+          <g transform="translate(8 38) rotate(-25)"><ellipse class="foot-mast__leaf" cx="0" cy="0" rx="6" ry="11" /></g>
+          <g transform="translate(28 52) rotate(30)"><ellipse class="foot-mast__leaf" cx="0" cy="0" rx="6" ry="11" /></g>
+        </svg>
+        <span class="copyright">© 2026 Khớp</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Sticky nav frost-on-scroll */
+  var nav = document.getElementById("nav");
+  var onScroll = function () {
+    nav.classList.toggle("is-scrolled", window.scrollY > 8);
+  };
+  document.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* Mobile nav disclosure */
+  var burger = document.getElementById("burgerBtn");
+  var panel = document.getElementById("mobilePanel");
+  burger.addEventListener("click", function () {
+    var open = panel.getAttribute("data-open") === "true";
+    panel.setAttribute("data-open", String(!open));
+    burger.setAttribute("aria-expanded", String(!open));
+  });
+
+  /* Command palette */
+  var cmdk = document.getElementById("cmdk");
+  var cmdkTrigger = document.getElementById("cmdkTrigger");
+  var cmdkInput = document.getElementById("cmdkInput");
+  var cmdkList = document.getElementById("cmdkList");
+
+  var commands = [
+    { label: "Tóm tắt công việc", hint: "Phần", href: "#job-summary" },
+    { label: "Danh sách freelancer", hint: "Phần", href: "#results" },
+    { label: "Trang chủ", hint: "Điều hướng", href: "index.html" },
+    { label: "Cách hoạt động", hint: "Điều hướng", href: "index.html#how" },
+    { label: "Đăng công việc", hint: "Hành động", href: "index.html#dang-cong-viec" }
+  ];
+
+  var activeIndex = 0;
+
+  function renderList(filter) {
+    var q = (filter || "").trim().toLowerCase();
+    var matches = commands.filter(function (c) { return c.label.toLowerCase().indexOf(q) !== -1; });
+    cmdkList.innerHTML = "";
+    if (matches.length === 0) {
+      cmdkList.innerHTML = '<li class="cmdk__empty">Không tìm thấy mục nào.</li>';
+      return;
+    }
+    activeIndex = 0;
+    matches.forEach(function (c, i) {
+      var li = document.createElement("li");
+      li.setAttribute("role", "option");
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "cmdk__item";
+      btn.setAttribute("data-active", i === 0 ? "true" : "false");
+      btn.innerHTML = "<span>" + c.label + "</span><span class=\"mono-tag\">" + c.hint + "</span>";
+      btn.addEventListener("click", function () { go(c.href); });
+      li.appendChild(btn);
+      cmdkList.appendChild(li);
+    });
+  }
+
+  function go(href) {
+    cmdk.close();
+    if (href.charAt(0) === "#") {
+      var el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    } else {
+      window.location.href = href;
+    }
+  }
+
+  function openCmdk() {
+    renderList("");
+    cmdk.showModal();
+    cmdkInput.value = "";
+    cmdkInput.focus();
+  }
+
+  cmdkTrigger.addEventListener("click", openCmdk);
+  document.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      if (cmdk.open) { cmdk.close(); } else { openCmdk(); }
+    }
+  });
+  cmdk.addEventListener("click", function (e) {
+    if (e.target === cmdk) cmdk.close();
+  });
+  cmdkInput.addEventListener("input", function () { renderList(cmdkInput.value); });
+  cmdkInput.addEventListener("keydown", function (e) {
+    var items = cmdkList.querySelectorAll(".cmdk__item");
+    if (items.length === 0) return;
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      items[activeIndex].setAttribute("data-active", "false");
+      activeIndex = e.key === "ArrowDown"
+        ? (activeIndex + 1) % items.length
+        : (activeIndex - 1 + items.length) % items.length;
+      items[activeIndex].setAttribute("data-active", "true");
+      items[activeIndex].scrollIntoView({ block: "nearest" });
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      items[activeIndex].click();
+    }
+  });
+
+  /* Results — sort + filter (front-end only, static data) */
+  var list = document.getElementById("resultsList");
+  var sortSelect = document.getElementById("sortSelect");
+  var budgetFilter = document.getElementById("budgetFilter");
+
+  function applySort() {
+    var cards = Array.prototype.slice.call(list.children);
+    var mode = sortSelect.value;
+    cards.sort(function (a, b) {
+      var am = parseFloat(a.dataset.match), bm = parseFloat(b.dataset.match);
+      var ab = parseFloat(a.dataset.budget), bb = parseFloat(b.dataset.budget);
+      if (mode === "budget-asc") return ab - bb;
+      if (mode === "budget-desc") return bb - ab;
+      return bm - am;
+    });
+    cards.forEach(function (card) { list.appendChild(card); });
+  }
+
+  function applyFilter() {
+    var cards = list.children;
+    for (var i = 0; i < cards.length; i++) {
+      var b = parseFloat(cards[i].dataset.budget);
+      cards[i].hidden = budgetFilter.checked && (b < 15 || b > 25);
+    }
+  }
+
+  sortSelect.addEventListener("change", applySort);
+  budgetFilter.addEventListener("change", applyFilter);
+})();
+</script>
+
+</body>
+</html>
