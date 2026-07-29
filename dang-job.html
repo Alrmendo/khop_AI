@@ -1,0 +1,391 @@
+<!doctype html>
+<!-- Hallmark · additional page, same design system as index.html (Garden theme, Workbench macrostructure)
+   · genre: editorial · theme: Garden · nav: N1b shape (cross-page hrefs) · footer: Ft1 shape (dark botanical band)
+   · new components: job-compose panel (textarea + submit), source badge, notice panel (reused .panel/.mark/.explain-list voice)
+   · pre-emit critique: P5 H4 E5 S4 R5 V4 -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Đăng công việc — Khớp</title>
+<meta name="description" content="Mô tả công việc bằng ngôn ngữ tự nhiên — AI của Khớp đọc và bóc tách kỹ năng, kinh nghiệm, ngân sách và thời hạn tự động." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html">Khớp <span class="chip">AI</span></a>
+
+    <nav class="nav__center" aria-label="Điều hướng chính">
+      <a class="nav__link" href="index.html#how">Cách hoạt động</a>
+      <a class="nav__link" href="index.html#features">Tính năng</a>
+      <a class="nav__link" href="index.html#freelancer">Dành cho Freelancer</a>
+    </nav>
+
+    <div class="nav__right">
+      <a class="nav__signin" href="index.html#signin">Đăng nhập</a>
+      <button class="cmdk-trigger" id="cmdkTrigger" aria-haspopup="dialog" aria-controls="cmdk">
+        <span>Tìm nhanh</span><kbd>⌘K</kbd>
+      </button>
+      <a class="btn btn--primary" href="#job-compose">Đăng công việc</a>
+      <button class="nav__burger" id="burgerBtn" aria-expanded="false" aria-controls="mobilePanel" aria-label="Mở menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__mobile-panel" id="mobilePanel">
+    <a href="index.html#how">Cách hoạt động</a>
+    <a href="index.html#features">Tính năng</a>
+    <a href="index.html#freelancer">Dành cho Freelancer</a>
+    <a href="index.html#signin">Đăng nhập</a>
+    <a class="btn btn--primary" href="#job-compose">Đăng công việc</a>
+  </div>
+</header>
+
+<dialog class="cmdk" id="cmdk" aria-label="Tìm nhanh">
+  <div class="cmdk__input-row">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input class="cmdk__input" id="cmdkInput" type="text" placeholder="Đi tới phần, hoặc thực hiện một hành động…" autocomplete="off" />
+  </div>
+  <ul class="cmdk__list" id="cmdkList" role="listbox"></ul>
+</dialog>
+
+<main id="main">
+
+  <!-- ===================== Intro ===================== -->
+  <section class="container page-head" id="job-compose">
+    <a class="link-back" href="index.html">← Quay lại trang chủ</a>
+
+    <span class="mono-tag">ĐĂNG CÔNG VIỆC BẰNG NGÔN NGỮ TỰ NHIÊN</span>
+    <h1>Đăng công việc — mô tả bằng ngôn ngữ tự nhiên, AI sẽ hiểu.</h1>
+    <p>Gõ mô tả công việc như đang nói chuyện bình thường. AI sẽ tự bóc tách kỹ năng, kinh nghiệm, ngân sách và thời hạn — không cần điền biểu mẫu nhiều bước.</p>
+
+    <div class="panel job-compose-panel">
+      <div class="panel__frame"><span>Mô tả công việc</span><span>Nhập tự do</span></div>
+      <div class="panel__body">
+        <textarea
+          id="jobDescInput"
+          class="job-textarea"
+          rows="6"
+          placeholder="Cần thiết kế lại web bán hàng, thành thạo Figma, ngân sách 15-25 triệu, 3 tuần..."
+        ></textarea>
+        <div class="job-form__actions">
+          <button class="btn btn--primary" id="analyzeBtn" type="button">Phân tích mô tả</button>
+          <span class="job-form__hint">AI chỉ đọc để bóc dữ liệu — không tự động đăng bài giúp bạn.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel notice-panel" id="apiErrorBanner" hidden>
+      <div class="panel__frame"><span>Kết nối server</span><span>Lỗi</span></div>
+      <div class="panel__body">
+        <p>Không kết nối được server. Hãy chắc chắn backend đang chạy ở <code>http://127.0.0.1:8000</code> rồi thử lại.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Analysis result ===================== -->
+  <section class="container" id="analysis-result">
+
+    <!-- status: ok -->
+    <div class="panel result-panel" id="resultOk" hidden>
+      <div class="panel__frame">
+        <span>Dữ liệu đã bóc</span>
+        <span class="source-badge" id="sourceBadge"></span>
+      </div>
+      <div class="panel__body jobform">
+        <div class="jobform__field">
+          <span class="k">Kỹ năng cần</span>
+          <div class="tag-row" id="resultSkills"></div>
+        </div>
+        <div class="jobform__field"><span class="k">Kinh nghiệm tối thiểu</span><span class="v" id="resultExperience">—</span></div>
+        <div class="jobform__field"><span class="k">Ngân sách</span><span class="v" id="resultBudget">—</span></div>
+        <div class="jobform__field"><span class="k">Thời hạn</span><span class="v" id="resultDeadline">—</span></div>
+      </div>
+    </div>
+
+    <!-- status: needs_more_info -->
+    <div class="panel notice-panel" id="resultNotice" hidden>
+      <div class="panel__frame"><span>Mô tả chưa đủ rõ</span><span>Cần bổ sung</span></div>
+      <div class="panel__body">
+        <div class="notice-heading">
+          <span class="mark mark--warn">△</span>
+          <strong>Cần bạn mô tả rõ hơn một chút</strong>
+        </div>
+        <p class="notice-reason" id="noticeReason"></p>
+        <ul class="notice-list" id="noticeMissingList"></ul>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="foot-band">
+  <div class="container">
+    <div class="foot-mast">
+      <div class="foot-mast__brand">
+        <span class="wordmark">Khớp</span>
+        <span class="tagline">Ghép việc bằng AI, có giải thích.</span>
+      </div>
+
+      <nav class="foot-mast__links" aria-label="Liên kết footer">
+        <a href="index.html#audience">Dành cho doanh nghiệp</a>
+        <a href="index.html#freelancer">Dành cho Freelancer</a>
+        <a href="index.html#privacy">Bảo mật dữ liệu</a>
+      </nav>
+
+      <div class="foot-mast__meta">
+        <svg class="foot-mast__sprig" viewBox="0 0 40 80" aria-hidden="true">
+          <path class="foot-mast__stem" d="M 20 76 Q 18 56 21 36 Q 22 22 20 8" />
+          <g transform="translate(8 38) rotate(-25)"><ellipse class="foot-mast__leaf" cx="0" cy="0" rx="6" ry="11" /></g>
+          <g transform="translate(28 52) rotate(30)"><ellipse class="foot-mast__leaf" cx="0" cy="0" rx="6" ry="11" /></g>
+        </svg>
+        <span class="copyright">© 2026 Khớp</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Sticky nav frost-on-scroll */
+  var nav = document.getElementById("nav");
+  var onScroll = function () {
+    nav.classList.toggle("is-scrolled", window.scrollY > 8);
+  };
+  document.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* Mobile nav disclosure */
+  var burger = document.getElementById("burgerBtn");
+  var panel = document.getElementById("mobilePanel");
+  burger.addEventListener("click", function () {
+    var open = panel.getAttribute("data-open") === "true";
+    panel.setAttribute("data-open", String(!open));
+    burger.setAttribute("aria-expanded", String(!open));
+  });
+
+  /* Command palette */
+  var cmdk = document.getElementById("cmdk");
+  var cmdkTrigger = document.getElementById("cmdkTrigger");
+  var cmdkInput = document.getElementById("cmdkInput");
+  var cmdkList = document.getElementById("cmdkList");
+
+  var commands = [
+    { label: "Mô tả công việc", hint: "Phần", href: "#job-compose" },
+    { label: "Kết quả phân tích", hint: "Phần", href: "#analysis-result" },
+    { label: "Trang chủ", hint: "Điều hướng", href: "index.html" },
+    { label: "Cách hoạt động", hint: "Điều hướng", href: "index.html#how" }
+  ];
+
+  var activeIndex = 0;
+
+  function renderList(filter) {
+    var q = (filter || "").trim().toLowerCase();
+    var matches = commands.filter(function (c) { return c.label.toLowerCase().indexOf(q) !== -1; });
+    cmdkList.innerHTML = "";
+    if (matches.length === 0) {
+      cmdkList.innerHTML = '<li class="cmdk__empty">Không tìm thấy mục nào.</li>';
+      return;
+    }
+    activeIndex = 0;
+    matches.forEach(function (c, i) {
+      var li = document.createElement("li");
+      li.setAttribute("role", "option");
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "cmdk__item";
+      btn.setAttribute("data-active", i === 0 ? "true" : "false");
+      btn.innerHTML = "<span>" + c.label + "</span><span class=\"mono-tag\">" + c.hint + "</span>";
+      btn.addEventListener("click", function () { go(c.href); });
+      li.appendChild(btn);
+      cmdkList.appendChild(li);
+    });
+  }
+
+  function go(href) {
+    cmdk.close();
+    if (href.charAt(0) === "#") {
+      var el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    } else {
+      window.location.href = href;
+    }
+  }
+
+  function openCmdk() {
+    renderList("");
+    cmdk.showModal();
+    cmdkInput.value = "";
+    cmdkInput.focus();
+  }
+
+  cmdkTrigger.addEventListener("click", openCmdk);
+  document.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      if (cmdk.open) { cmdk.close(); } else { openCmdk(); }
+    }
+  });
+  cmdk.addEventListener("click", function (e) {
+    if (e.target === cmdk) cmdk.close();
+  });
+  cmdkInput.addEventListener("input", function () { renderList(cmdkInput.value); });
+  cmdkInput.addEventListener("keydown", function (e) {
+    var items = cmdkList.querySelectorAll(".cmdk__item");
+    if (items.length === 0) return;
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      items[activeIndex].setAttribute("data-active", "false");
+      activeIndex = e.key === "ArrowDown"
+        ? (activeIndex + 1) % items.length
+        : (activeIndex - 1 + items.length) % items.length;
+      items[activeIndex].setAttribute("data-active", "true");
+      items[activeIndex].scrollIntoView({ block: "nearest" });
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      items[activeIndex].click();
+    }
+  });
+
+  /* ===================== Phân tích mô tả — POST /api/extract ===================== */
+
+  var API_BASE = "http://127.0.0.1:8000";
+
+  var textarea = document.getElementById("jobDescInput");
+  var analyzeBtn = document.getElementById("analyzeBtn");
+  var errorBanner = document.getElementById("apiErrorBanner");
+  var resultOk = document.getElementById("resultOk");
+  var resultNotice = document.getElementById("resultNotice");
+
+  var SOURCE_LABELS = {
+    tier1_algorithm: { text: "Xử lý bằng thuật toán (không dùng AI)", cls: "" },
+    tier2_ai: { text: "Xử lý bằng AI (mô tả cần suy luận thêm)", cls: "source-badge--ai" }
+  };
+
+  function trieu(dong) { return Math.round(dong / 1e6); }
+
+  function formatBudget(min, max, currency) {
+    if (min == null && max == null) return "Chưa xác định";
+    if (currency === "VND") {
+      var a = min != null ? trieu(min) : null;
+      var b = max != null ? trieu(max) : null;
+      if (a != null && b != null && a !== b) return a + "–" + b + " triệu ₫";
+      return (a != null ? a : b) + " triệu ₫";
+    }
+    if (currency === "USD") {
+      if (min != null && max != null && min !== max) return "$" + min + "–$" + max;
+      return "$" + (min != null ? min : max);
+    }
+    if (min != null && max != null && min !== max) return min + "–" + max;
+    return String(min != null ? min : max);
+  }
+
+  function resetPanels() {
+    resultOk.hidden = true;
+    resultNotice.hidden = true;
+    errorBanner.hidden = true;
+  }
+
+  function renderOk(data) {
+    var badge = SOURCE_LABELS[data.source] || { text: data.source || "—", cls: "" };
+    var sourceBadge = document.getElementById("sourceBadge");
+    sourceBadge.textContent = badge.text;
+    sourceBadge.className = "source-badge" + (badge.cls ? " " + badge.cls : "");
+
+    var e = data.extracted || {};
+
+    var skillsWrap = document.getElementById("resultSkills");
+    skillsWrap.innerHTML = "";
+    if (e.required_skills && e.required_skills.length) {
+      e.required_skills.forEach(function (skill) {
+        var span = document.createElement("span");
+        span.className = "tag";
+        span.textContent = skill;
+        skillsWrap.appendChild(span);
+      });
+    } else {
+      var none = document.createElement("span");
+      none.className = "v";
+      none.textContent = "Chưa xác định";
+      skillsWrap.appendChild(none);
+    }
+
+    document.getElementById("resultExperience").textContent =
+      e.min_experience_years != null ? e.min_experience_years + " năm" : "Chưa xác định";
+    document.getElementById("resultBudget").textContent =
+      formatBudget(e.budget_min, e.budget_max, e.currency);
+    document.getElementById("resultDeadline").textContent =
+      e.deadline_weeks != null ? e.deadline_weeks + " tuần" : "Chưa xác định";
+
+    resultOk.hidden = false;
+  }
+
+  function renderNotice(data) {
+    document.getElementById("noticeReason").textContent = data.reason || "Mô tả chưa đủ chi tiết để bóc tách dữ liệu.";
+    var list = document.getElementById("noticeMissingList");
+    list.innerHTML = "";
+    (data.still_missing || []).forEach(function (item) {
+      var li = document.createElement("li");
+      li.textContent = item;
+      list.appendChild(li);
+    });
+    resultNotice.hidden = false;
+  }
+
+  function setLoading(isLoading) {
+    analyzeBtn.disabled = isLoading;
+    analyzeBtn.textContent = isLoading ? "Đang phân tích…" : "Phân tích mô tả";
+  }
+
+  analyzeBtn.addEventListener("click", function () {
+    var text = textarea.value.trim();
+    if (!text) {
+      textarea.focus();
+      return;
+    }
+
+    resetPanels();
+    setLoading(true);
+
+    fetch(API_BASE + "/api/extract", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: text })
+    })
+      .then(function (r) {
+        if (!r.ok) throw new Error("extract");
+        return r.json();
+      })
+      .then(function (data) {
+        if (data.status === "needs_more_info") {
+          renderNotice(data);
+        } else {
+          renderOk(data);
+        }
+      })
+      .catch(function () {
+        errorBanner.hidden = false;
+      })
+      .finally(function () {
+        setLoading(false);
+      });
+  });
+})();
+</script>
+
+</body>
+</html>

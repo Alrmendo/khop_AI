@@ -14,6 +14,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from scoring import rank
 from roadmap import build_roadmap
+from tier2_ai import process_job
+from pydantic import BaseModel
 
 app = FastAPI(title="Khớp — API matching")
 
@@ -62,3 +64,17 @@ def get_roadmap(freelancer_id: str):
     if fl is None:
         return {"error": f"Không tìm thấy freelancer id '{freelancer_id}'"}
     return build_roadmap(job, fl)
+
+
+class JobText(BaseModel):
+    text: str
+
+
+@app.post("/api/extract")
+def extract(payload: JobText):
+    """
+    Nhận mô tả job dạng văn bản tự do → trả về dữ liệu đã chuẩn hoá.
+    Luồng phân tầng: Tầng 1 (thuật toán) → Tầng 2 (Gemini) → báo cần bổ sung.
+    Trường 'source' cho biết tầng nào đã xử lý.
+    """
+    return process_job(payload.text)
