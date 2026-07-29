@@ -1,0 +1,60 @@
+{
+  "job": {
+    "id": "job_001",
+    "title": "Thiết kế lại giao diện web bán hàng",
+    "description": "Cần thiết kế lại toàn bộ giao diện website thương mại điện tử bán quần áo. Tập trung trang chủ, trang sản phẩm và giỏ hàng. Ưu tiên người từng làm e-commerce, thành thạo Figma và có gu thẩm mỹ hiện đại.",
+    "required_skills": ["Figma", "UI Design", "E-commerce"],
+    "min_experience_years": 3,
+    "budget_min": 15000000,
+    "budget_max": 25000000,
+    "deadline_weeks": 3,
+    "timezone": 7
+  },
+
+  "freelancers": [
+    {
+      "id": "fl_001",
+      "name": "Lan Đặng",
+      "role": "UI/UX Designer",
+      "bio": "5 năm thiết kế giao diện cho các dự án thương mại điện tử. Thành thạo Figma, xây dựng design system, đã hoàn thành 12 dự án e-commerce.",
+      "skills": ["Figma", "UI Design", "E-commerce", "Prototyping", "Design System"],
+      "experience_years": 5,
+      "proposed_price": 18000000,
+      "available_in_weeks": 0,
+      "timezone": 8
+    },
+    {
+      "id": "fl_002",
+      "name": "Minh Trần",
+      "role": "Product Designer",
+      "bio": "4 năm làm product design cho startup. Mạnh về Figma, user research và tối ưu luồng người dùng. Ít kinh nghiệm bán hàng trực tuyến.",
+      "skills": ["UI Design", "Figma", "Product Design", "User Research"],
+      "experience_years": 4,
+      "proposed_price": 20000000,
+      "available_in_weeks": 1,
+      "timezone": 7
+    },
+    {
+      "id": "fl_003",
+      "name": "Huy Nguyễn",
+      "role": "Web Designer",
+      "bio": "3 năm thiết kế web bán hàng, thành thạo HTML/CSS và dựng giao diện e-commerce. Chủ yếu dùng công cụ ngoài Figma.",
+      "skills": ["Web Design", "HTML/CSS", "UI Design", "E-commerce"],
+      "experience_years": 3,
+      "proposed_price": 15000000,
+      "available_in_weeks": 0,
+      "timezone": 7
+    },
+    {
+      "id": "fl_004",
+      "name": "Đỗ Thu Hà",
+      "role": "UI Designer",
+      "bio": "2 năm thiết kế giao diện, chủ yếu dùng Sketch và làm minh hoạ. Chưa có dự án e-commerce lớn.",
+      "skills": ["UI Design", "Sketch", "Illustration"],
+      "experience_years": 2,
+      "proposed_price": 27000000,
+      "available_in_weeks": 2,
+      "timezone": 8
+    }
+  ]
+}

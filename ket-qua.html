@@ -68,13 +68,20 @@
     <h1>Kết quả matching</h1>
     <p>AI đã đọc mô tả công việc dưới đây và xếp hạng freelancer theo tỷ lệ phù hợp — cao đến thấp.</p>
 
+    <div class="panel" id="apiErrorBanner" hidden>
+      <div class="panel__frame"><span>Kết nối server</span><span>Lỗi</span></div>
+      <div class="panel__body">
+        <p>Không kết nối được server. Hãy chắc chắn backend đang chạy ở <code>http://127.0.0.1:8000</code> rồi tải lại trang.</p>
+      </div>
+    </div>
+
     <div class="panel job-summary-panel">
       <div class="panel__frame"><span>Việc cần tìm freelancer</span><span>Minh hoạ</span></div>
       <div class="panel__body jobform">
-        <div class="jobform__field"><span class="k">Tiêu đề</span><span class="v">Thiết kế lại giao diện web bán hàng</span></div>
-        <div class="jobform__field"><span class="k">Kỹ năng cần</span><div class="tag-row"><span class="tag">Figma</span><span class="tag">UI Design</span><span class="tag">E-commerce</span></div></div>
-        <div class="jobform__field"><span class="k">Ngân sách</span><span class="v">15–25 triệu ₫</span></div>
-        <div class="jobform__field"><span class="k">Thời hạn</span><span class="v">3 tuần</span></div>
+        <div class="jobform__field"><span class="k">Tiêu đề</span><span class="v" id="jobTitle">Đang tải…</span></div>
+        <div class="jobform__field"><span class="k">Kỹ năng cần</span><div class="tag-row" id="jobSkills"></div></div>
+        <div class="jobform__field"><span class="k">Ngân sách</span><span class="v" id="jobBudget">—</span></div>
+        <div class="jobform__field"><span class="k">Thời hạn</span><span class="v" id="jobDeadline">—</span></div>
       </div>
     </div>
   </section>
@@ -82,7 +89,7 @@
   <!-- ===================== Results ===================== -->
   <section class="container results" id="results">
     <div class="results__toolbar">
-      <p class="results__count"><strong>4</strong> freelancer phù hợp</p>
+      <p class="results__count"><strong id="resultsCount">0</strong> freelancer phù hợp</p>
       <div class="results__controls">
         <label class="select-field">
           <span>Sắp xếp</span>
@@ -94,134 +101,12 @@
         </label>
         <label class="checkbox-field">
           <input type="checkbox" id="budgetFilter" />
-          <span>Chỉ trong ngân sách (15–25tr)</span>
+          <span id="budgetFilterLabel">Chỉ trong ngân sách</span>
         </label>
       </div>
     </div>
 
-    <div class="results__list" id="resultsList">
-
-      <article class="result-card" data-match="96" data-budget="18">
-        <header class="result-card__head">
-          <span class="avatar">LĐ</span>
-          <div class="result-card__who">
-            <span class="result-card__name">Lan Đặng</span>
-            <span class="result-card__role">UI/UX Designer</span>
-          </div>
-          <div class="result-card__score">
-            <span class="result-card__pct">96%</span>
-            <span class="result-card__pct-label">phù hợp</span>
-          </div>
-        </header>
-        <div class="result-card__meta">
-          <span>Đề xuất: 18 triệu ₫</span>
-          <span>Có thể bắt đầu: tuần này</span>
-        </div>
-        <details class="result-card__reason">
-          <summary class="result-card__toggle"><span>Xem lý do</span><span class="result-card__chevron" aria-hidden="true">+</span></summary>
-          <div class="panel result-card__panel">
-            <div class="panel__frame"><span>Vì sao Lan Đặng khớp 96%</span><span>Minh hoạ</span></div>
-            <div class="panel__body explain-list">
-              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Kỹ năng Figma</strong> — 5 năm kinh nghiệm, 12 dự án e-commerce đã hoàn thành.</span></div>
-              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Kinh nghiệm phù hợp</strong> — vượt mức tối thiểu 3 năm mà công việc yêu cầu.</span></div>
-              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Ngân sách phù hợp</strong> — mức đề xuất nằm trong khoảng 15–25 triệu.</span></div>
-              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Múi giờ lệch 3 giờ</strong> — vẫn chồng lấp 4 giờ làm việc mỗi ngày.</span></div>
-            </div>
-          </div>
-        </details>
-      </article>
-
-      <article class="result-card" data-match="88" data-budget="20">
-        <header class="result-card__head">
-          <span class="avatar">MT</span>
-          <div class="result-card__who">
-            <span class="result-card__name">Minh Trần</span>
-            <span class="result-card__role">Product Designer</span>
-          </div>
-          <div class="result-card__score">
-            <span class="result-card__pct">88%</span>
-            <span class="result-card__pct-label">phù hợp</span>
-          </div>
-        </header>
-        <div class="result-card__meta">
-          <span>Đề xuất: 20 triệu ₫</span>
-          <span>Có thể bắt đầu: sau 1 tuần</span>
-        </div>
-        <details class="result-card__reason">
-          <summary class="result-card__toggle"><span>Xem lý do</span><span class="result-card__chevron" aria-hidden="true">+</span></summary>
-          <div class="panel result-card__panel">
-            <div class="panel__frame"><span>Vì sao Minh Trần khớp 88%</span><span>Minh hoạ</span></div>
-            <div class="panel__body explain-list">
-              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Kỹ năng Figma &amp; UI Design</strong> — 5 dự án thương mại điện tử đã hoàn thành.</span></div>
-              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Kinh nghiệm đạt yêu cầu</strong> — 3 năm, đúng mức tối thiểu công việc đề ra.</span></div>
-              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Ngân sách phù hợp</strong> — đề xuất 20 triệu, vẫn trong khoảng 15–25 triệu.</span></div>
-              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Bắt đầu sau 1 tuần</strong> — trễ hơn so với các freelancer khác trong danh sách.</span></div>
-            </div>
-          </div>
-        </details>
-      </article>
-
-      <article class="result-card" data-match="81" data-budget="15">
-        <header class="result-card__head">
-          <span class="avatar">HN</span>
-          <div class="result-card__who">
-            <span class="result-card__name">Huy Nguyễn</span>
-            <span class="result-card__role">Web Designer</span>
-          </div>
-          <div class="result-card__score">
-            <span class="result-card__pct">81%</span>
-            <span class="result-card__pct-label">phù hợp</span>
-          </div>
-        </header>
-        <div class="result-card__meta">
-          <span>Đề xuất: 15 triệu ₫</span>
-          <span>Có thể bắt đầu: ngay</span>
-        </div>
-        <details class="result-card__reason">
-          <summary class="result-card__toggle"><span>Xem lý do</span><span class="result-card__chevron" aria-hidden="true">+</span></summary>
-          <div class="panel result-card__panel">
-            <div class="panel__frame"><span>Vì sao Huy Nguyễn khớp 81%</span><span>Minh hoạ</span></div>
-            <div class="panel__body explain-list">
-              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Kỹ năng Figma cơ bản</strong> — mới có 2 dự án e-commerce, ít hơn các ứng viên khác.</span></div>
-              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Kinh nghiệm 2 năm</strong> — dưới mức tối thiểu 3 năm mà công việc yêu cầu.</span></div>
-              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Ngân sách rất phù hợp</strong> — đề xuất 15 triệu, mức thấp nhất trong khoảng cho phép.</span></div>
-              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Có thể bắt đầu ngay</strong> — lịch trống khớp hoàn toàn với thời hạn 3 tuần.</span></div>
-            </div>
-          </div>
-        </details>
-      </article>
-
-      <article class="result-card" data-match="74" data-budget="27">
-        <header class="result-card__head">
-          <span class="avatar">TH</span>
-          <div class="result-card__who">
-            <span class="result-card__name">Đỗ Thu Hà</span>
-            <span class="result-card__role">UI Designer</span>
-          </div>
-          <div class="result-card__score">
-            <span class="result-card__pct">74%</span>
-            <span class="result-card__pct-label">phù hợp</span>
-          </div>
-        </header>
-        <div class="result-card__meta">
-          <span>Đề xuất: 27 triệu ₫</span>
-          <span>Có thể bắt đầu: sau 2 tuần</span>
-        </div>
-        <details class="result-card__reason">
-          <summary class="result-card__toggle"><span>Xem lý do</span><span class="result-card__chevron" aria-hidden="true">+</span></summary>
-          <div class="panel result-card__panel">
-            <div class="panel__frame"><span>Vì sao Đỗ Thu Hà khớp 74%</span><span>Minh hoạ</span></div>
-            <div class="panel__body explain-list">
-              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Chưa có dự án e-commerce</strong> — kỹ năng UI tốt nhưng chưa từng làm web bán hàng.</span></div>
-              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>4 năm kinh nghiệm</strong> — vượt mức tối thiểu công việc yêu cầu.</span></div>
-              <div class="explain-item"><span class="mark mark--warn">△</span><span class="t"><strong>Ngân sách vượt khoảng</strong> — đề xuất 27 triệu, cao hơn mức 15–25 triệu.</span></div>
-              <div class="explain-item"><span class="mark mark--ok">✓</span><span class="t"><strong>Bắt đầu sau 2 tuần</strong> — vẫn kịp thời hạn 3 tuần của công việc.</span></div>
-            </div>
-          </div>
-        </details>
-      </article>
-
-    </div>
+    <div class="results__list" id="resultsList"></div>
   </section>
 
 </main>
@@ -359,10 +244,271 @@
     }
   });
 
-  /* Results — sort + filter (front-end only, static data) */
+  /* Results — live data from /api/job và /api/match */
+  var API_BASE = "http://127.0.0.1:8000";
+
   var list = document.getElementById("resultsList");
   var sortSelect = document.getElementById("sortSelect");
   var budgetFilter = document.getElementById("budgetFilter");
+  var budgetFilterLabel = document.getElementById("budgetFilterLabel");
+  var resultsCount = document.getElementById("resultsCount");
+  var errorBanner = document.getElementById("apiErrorBanner");
+
+  var jobBudgetMinTr = 0, jobBudgetMaxTr = Infinity;
+
+  function trieu(dong) { return Math.round(dong / 1e6); }
+
+  function initials(name) {
+    var parts = name.trim().split(/\s+/);
+    var chars = parts.length > 1 ? parts[0].charAt(0) + parts[parts.length - 1].charAt(0) : parts[0].slice(0, 2);
+    return chars.toUpperCase();
+  }
+
+  function extractNumber(text, regex) {
+    var m = regex.exec(text || "");
+    return m ? parseInt(m[1].replace(/[.,]/g, ""), 10) : null;
+  }
+
+  function renderJob(job) {
+    document.getElementById("jobTitle").textContent = job.title;
+    document.getElementById("jobDeadline").textContent = job.deadline_weeks + " tuần";
+    jobBudgetMinTr = trieu(job.budget_min);
+    jobBudgetMaxTr = trieu(job.budget_max);
+    document.getElementById("jobBudget").textContent = jobBudgetMinTr + "–" + jobBudgetMaxTr + " triệu ₫";
+    if (budgetFilterLabel) {
+      budgetFilterLabel.textContent = "Chỉ trong ngân sách (" + jobBudgetMinTr + "–" + jobBudgetMaxTr + "tr)";
+    }
+    var skillsWrap = document.getElementById("jobSkills");
+    skillsWrap.innerHTML = "";
+    (job.required_skills || []).forEach(function (skill) {
+      var span = document.createElement("span");
+      span.className = "tag";
+      span.textContent = skill;
+      skillsWrap.appendChild(span);
+    });
+  }
+
+  function buildReasonItem(reason) {
+    var ok = !!reason.dat;
+    var div = document.createElement("div");
+    div.className = "explain-item";
+    var mark = document.createElement("span");
+    mark.className = "mark " + (ok ? "mark--ok" : "mark--warn");
+    mark.textContent = ok ? "✓" : "⚠";
+    var t = document.createElement("span");
+    t.className = "t";
+    var strong = document.createElement("strong");
+    strong.textContent = reason.tieu_chi;
+    t.appendChild(strong);
+    t.appendChild(document.createTextNode(" — " + reason.chi_tiet));
+    div.appendChild(mark);
+    div.appendChild(t);
+    return div;
+  }
+
+  function buildCard(item) {
+    var budgetReason = null, timeReason = null;
+    (item.reasons || []).forEach(function (r) {
+      if (r.tieu_chi.indexOf("Ngân sách") !== -1) budgetReason = r;
+      if (r.tieu_chi.indexOf("Thời gian") !== -1) timeReason = r;
+    });
+
+    var priceDong = extractNumber(budgetReason && budgetReason.chi_tiet, /Đề xuất\s*([\d.,]+)đ/);
+    var availWeeks = extractNumber(timeReason && timeReason.chi_tiet, /Bắt đầu sau\s*(\d+)\s*tuần/);
+
+    var priceTr = priceDong != null ? trieu(priceDong) : null;
+    var availLabel = availWeeks == null ? "—" : (availWeeks <= 0 ? "ngay" : "sau " + availWeeks + " tuần");
+
+    var article = document.createElement("article");
+    article.className = "result-card";
+    article.dataset.match = item.total;
+    article.dataset.budget = priceTr != null ? priceTr : 0;
+
+    var header = document.createElement("header");
+    header.className = "result-card__head";
+
+    var avatar = document.createElement("span");
+    avatar.className = "avatar";
+    avatar.textContent = initials(item.freelancer);
+
+    var who = document.createElement("div");
+    who.className = "result-card__who";
+    var nameSpan = document.createElement("span");
+    nameSpan.className = "result-card__name";
+    nameSpan.textContent = item.freelancer;
+    var roleSpan = document.createElement("span");
+    roleSpan.className = "result-card__role";
+    roleSpan.textContent = item.role;
+    who.appendChild(nameSpan);
+    who.appendChild(roleSpan);
+
+    var score = document.createElement("div");
+    score.className = "result-card__score";
+    var pct = document.createElement("span");
+    pct.className = "result-card__pct";
+    pct.textContent = item.total + "%";
+    var pctLabel = document.createElement("span");
+    pctLabel.className = "result-card__pct-label";
+    pctLabel.textContent = "phù hợp";
+    score.appendChild(pct);
+    score.appendChild(pctLabel);
+
+    header.appendChild(avatar);
+    header.appendChild(who);
+    header.appendChild(score);
+
+    var meta = document.createElement("div");
+    meta.className = "result-card__meta";
+    var metaBudget = document.createElement("span");
+    metaBudget.textContent = priceTr != null ? "Đề xuất: " + priceTr + " triệu ₫" : "Đề xuất: —";
+    var metaAvail = document.createElement("span");
+    metaAvail.textContent = "Có thể bắt đầu: " + availLabel;
+    meta.appendChild(metaBudget);
+    meta.appendChild(metaAvail);
+
+    var details = document.createElement("details");
+    details.className = "result-card__reason";
+    var summary = document.createElement("summary");
+    summary.className = "result-card__toggle";
+    summary.innerHTML = '<span>Xem lý do</span><span class="result-card__chevron" aria-hidden="true">+</span>';
+
+    var panel = document.createElement("div");
+    panel.className = "panel result-card__panel";
+    var frame = document.createElement("div");
+    frame.className = "panel__frame";
+    var frameTitle = document.createElement("span");
+    frameTitle.textContent = "Vì sao " + item.freelancer + " khớp " + item.total + "%";
+    var frameTag = document.createElement("span");
+    frameTag.textContent = "Minh hoạ";
+    frame.appendChild(frameTitle);
+    frame.appendChild(frameTag);
+
+    var body = document.createElement("div");
+    body.className = "panel__body explain-list";
+    (item.reasons || []).forEach(function (r) { body.appendChild(buildReasonItem(r)); });
+
+    panel.appendChild(frame);
+    panel.appendChild(body);
+    details.appendChild(summary);
+    details.appendChild(panel);
+
+    article.appendChild(header);
+    article.appendChild(meta);
+    article.appendChild(details);
+
+    var LOW_SCORE_THRESHOLD = 75;
+    if (item.total < LOW_SCORE_THRESHOLD && item.id) {
+      article.appendChild(buildRoadmapSection(item));
+    }
+
+    return article;
+  }
+
+  function buildRoadmapSection(item) {
+    var rm = document.createElement("details");
+    rm.className = "result-card__reason result-card__roadmap";
+
+    var summary = document.createElement("summary");
+    summary.className = "result-card__toggle";
+    summary.innerHTML = '<span>Xem lộ trình phát triển</span><span class="result-card__chevron" aria-hidden="true">+</span>';
+
+    var panel = document.createElement("div");
+    panel.className = "panel result-card__panel";
+    var frame = document.createElement("div");
+    frame.className = "panel__frame";
+    frame.innerHTML = "<span>Lộ trình phát triển cho " + item.freelancer + "</span><span>Minh hoạ</span>";
+
+    var body = document.createElement("div");
+    body.className = "panel__body roadmap-body";
+    var status = document.createElement("p");
+    status.className = "roadmap-status";
+    status.textContent = "Đang tải…";
+    body.appendChild(status);
+
+    panel.appendChild(frame);
+    panel.appendChild(body);
+    rm.appendChild(summary);
+    rm.appendChild(panel);
+
+    var loaded = false;
+    rm.addEventListener("toggle", function () {
+      if (rm.open && !loaded) {
+        loaded = true;
+        loadRoadmap(item.id, body);
+      }
+    });
+
+    return rm;
+  }
+
+  function loadRoadmap(id, bodyEl) {
+    fetch(API_BASE + "/api/roadmap/" + encodeURIComponent(id))
+      .then(function (r) { if (!r.ok) throw new Error("roadmap"); return r.json(); })
+      .then(function (data) {
+        if (data.error) throw new Error(data.error);
+        renderRoadmapBody(bodyEl, data);
+      })
+      .catch(function () {
+        bodyEl.innerHTML = "";
+        var p = document.createElement("p");
+        p.className = "roadmap-error";
+        p.textContent = "Không tải được lộ trình phát triển. Vui lòng thử lại sau.";
+        bodyEl.appendChild(p);
+      });
+  }
+
+  function renderRoadmapBody(bodyEl, data) {
+    bodyEl.innerHTML = "";
+
+    if (!data.can_lo_trinh) {
+      var okMsg = document.createElement("p");
+      okMsg.className = "roadmap-status";
+      okMsg.textContent = "Điểm đã cao, không cần lộ trình cải thiện.";
+      bodyEl.appendChild(okMsg);
+      return;
+    }
+
+    var scoreLine = document.createElement("p");
+    scoreLine.className = "roadmap-score";
+    scoreLine.innerHTML = "Nếu cải thiện: <strong>" + data.diem_hien_tai + "%</strong> → <strong>" + data.diem_du_kien + "%</strong>";
+    bodyEl.appendChild(scoreLine);
+
+    if (!data.cac_buoc || data.cac_buoc.length === 0) {
+      var none = document.createElement("p");
+      none.className = "roadmap-status";
+      none.textContent = "Không có bước cải thiện cụ thể nào được đề xuất.";
+      bodyEl.appendChild(none);
+      return;
+    }
+
+    var stepsWrap = document.createElement("div");
+    stepsWrap.className = "roadmap-steps";
+    data.cac_buoc.forEach(function (step) {
+      var row = document.createElement("div");
+      row.className = "roadmap-step";
+      var gain = document.createElement("span");
+      gain.className = "roadmap-step__gain";
+      gain.textContent = "+" + step.diem_co_the_lay_lai + "đ";
+      var stepBody = document.createElement("span");
+      stepBody.className = "roadmap-step__body";
+      var strong = document.createElement("strong");
+      strong.textContent = step.tieu_chi;
+      stepBody.appendChild(strong);
+      stepBody.appendChild(document.createTextNode(" — " + step.hanh_dong));
+      row.appendChild(gain);
+      row.appendChild(stepBody);
+      stepsWrap.appendChild(row);
+    });
+    bodyEl.appendChild(stepsWrap);
+  }
+
+  function renderResults(matchData) {
+    list.innerHTML = "";
+    resultsCount.textContent = matchData.count;
+    (matchData.results || []).forEach(function (item) {
+      list.appendChild(buildCard(item));
+    });
+  }
 
   function applySort() {
     var cards = Array.prototype.slice.call(list.children);
@@ -381,12 +527,34 @@
     var cards = list.children;
     for (var i = 0; i < cards.length; i++) {
       var b = parseFloat(cards[i].dataset.budget);
-      cards[i].hidden = budgetFilter.checked && (b < 15 || b > 25);
+      cards[i].hidden = budgetFilter.checked && (b < jobBudgetMinTr || b > jobBudgetMaxTr);
     }
   }
 
   sortSelect.addEventListener("change", applySort);
   budgetFilter.addEventListener("change", applyFilter);
+
+  function showError() {
+    if (errorBanner) errorBanner.hidden = false;
+    resultsCount.textContent = "0";
+    list.innerHTML = "";
+  }
+
+  function loadData() {
+    Promise.all([
+      fetch(API_BASE + "/api/job").then(function (r) { if (!r.ok) throw new Error("job"); return r.json(); }),
+      fetch(API_BASE + "/api/match").then(function (r) { if (!r.ok) throw new Error("match"); return r.json(); })
+    ]).then(function (values) {
+      renderJob(values[0]);
+      renderResults(values[1]);
+      applySort();
+      applyFilter();
+    }).catch(function () {
+      showError();
+    });
+  }
+
+  loadData();
 })();
 </script>
 

@@ -950,6 +950,27 @@ dialog.cmdk::backdrop {
 .result-card__reason[open] .result-card__chevron { transform: rotate(45deg); }
 .result-card__panel { margin-top: var(--space-md); }
 
+.roadmap-status { font-size: var(--text-sm); color: var(--color-muted); }
+.roadmap-error { font-size: var(--text-sm); color: var(--color-warn); }
+.roadmap-score { font-size: var(--text-md); color: var(--color-ink-2); margin-bottom: var(--space-md); }
+.roadmap-score strong { font-family: var(--font-display); font-weight: 600; color: var(--color-accent-2); }
+.roadmap-steps { display: grid; gap: var(--space-md); }
+.roadmap-step { display: grid; grid-template-columns: auto 1fr; gap: var(--space-sm); align-items: start; }
+.roadmap-step__gain {
+  flex-shrink: 0;
+  min-width: 3rem;
+  text-align: center;
+  padding: var(--space-3xs) var(--space-xs);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-2-soft);
+  color: var(--color-accent-2);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-xs);
+}
+.roadmap-step__body { font-size: var(--text-sm); color: var(--color-ink-2); }
+.roadmap-step__body strong { color: var(--color-ink); }
+
 @media (max-width: 26rem) {
   .result-card__head { grid-template-columns: auto 1fr; row-gap: var(--space-sm); }
   .result-card__score {
