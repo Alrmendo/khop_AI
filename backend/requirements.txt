@@ -3,3 +3,5 @@ uvicorn
 httpx
 python-dotenv
 google-genai
+pdfplumber
+python-multipart

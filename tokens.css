@@ -29,6 +29,7 @@
   --color-warn:        oklch(55% 0.12 75);
   --color-warn-soft:   oklch(90% 0.04 80);
   --color-error:       oklch(52% 0.16 30);
+  --color-error-soft:  oklch(90% 0.04 30);
   --color-accent-hover: oklch(38% 0.13 145);
   --color-backdrop:    oklch(19% 0.045 152 / 0.5);
 

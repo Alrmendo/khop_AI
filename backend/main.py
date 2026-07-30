@@ -15,7 +15,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from scoring import rank
 from roadmap import build_roadmap
 from tier2_ai import process_job
+from pdf_reader import parse_resume_bytes
 from pydantic import BaseModel
+from fastapi import UploadFile, File
 
 app = FastAPI(title="Khớp — API matching")
 
@@ -78,3 +80,18 @@ def extract(payload: JobText):
     Trường 'source' cho biết tầng nào đã xử lý.
     """
     return process_job(payload.text)
+
+
+@app.post("/api/parse-resume")
+async def parse_resume_upload(file: UploadFile = File(...)):
+    """
+    Nhận file CV (PDF) upload → bóc kỹ năng + kinh nghiệm.
+    Chỉ đọc được PDF text; PDF scan sẽ báo cần OCR.
+    """
+    if not file.filename.lower().endswith(".pdf"):
+        return {"status": "error", "reason": "Chỉ nhận file PDF."}
+    data = await file.read()
+    try:
+        return parse_resume_bytes(data)
+    except Exception as e:
+        return {"status": "error", "reason": f"Không đọc được file ({type(e).__name__})"}

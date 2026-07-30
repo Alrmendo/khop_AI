@@ -1,14 +1,14 @@
 <!doctype html>
 <!-- Hallmark · additional page, same design system as index.html (Garden theme, Workbench macrostructure)
    · genre: editorial · theme: Garden · nav: N1b shape (cross-page hrefs) · footer: Ft1 shape (dark botanical band)
-   · new components: job-compose panel (textarea + submit), source badge, notice panel (reused .panel/.mark/.explain-list voice)
+   · new components: upload dropzone + file chip (minimal, token-only), reused .panel/.notice-panel/.jobform/.tag-row/.source-badge
    · pre-emit critique: P5 H4 E5 S4 R5 V4 -->
 <html lang="vi">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Đăng công việc — Khớp</title>
-<meta name="description" content="Mô tả công việc bằng ngôn ngữ tự nhiên — AI của Khớp đọc và bóc tách kỹ năng, kinh nghiệm, ngân sách và thời hạn tự động." />
+<title>Tạo hồ sơ freelancer — Khớp</title>
+<meta name="description" content="Tải CV dạng PDF lên — AI của Khớp tự đọc và bóc tách kỹ năng cùng số năm kinh nghiệm để tạo hồ sơ freelancer." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
@@ -60,26 +60,40 @@
 
 <main id="main">
 
-  <!-- ===================== Intro ===================== -->
-  <section class="container page-head" id="job-compose">
+  <!-- ===================== Intro + upload ===================== -->
+  <section class="container page-head" id="upload">
     <a class="link-back" href="index.html">← Quay lại trang chủ</a>
 
-    <span class="mono-tag">ĐĂNG CÔNG VIỆC BẰNG NGÔN NGỮ TỰ NHIÊN</span>
-    <h1>Đăng công việc — mô tả bằng ngôn ngữ tự nhiên, AI sẽ hiểu.</h1>
-    <p>Gõ mô tả công việc như đang nói chuyện bình thường. AI sẽ tự bóc tách kỹ năng, kinh nghiệm, ngân sách và thời hạn — không cần điền biểu mẫu nhiều bước.</p>
+    <span class="mono-tag">TẠO HỒ SƠ FREELANCER</span>
+    <h1>Tạo hồ sơ freelancer — tải CV lên, AI đọc giúp.</h1>
+    <p>Tải file CV dạng PDF lên — hệ thống tự đọc và bóc tách kỹ năng cùng số năm kinh nghiệm, bạn xem lại trước khi lưu vào hồ sơ.</p>
 
-    <div class="panel job-compose-panel">
-      <div class="panel__frame"><span>Mô tả công việc</span><span>Nhập tự do</span></div>
+    <div class="panel upload-panel" id="uploadPanel">
+      <div class="panel__frame"><span>Tải CV lên</span><span>Chỉ nhận PDF</span></div>
       <div class="panel__body">
-        <textarea
-          id="jobDescInput"
-          class="job-textarea"
-          rows="6"
-          placeholder="Cần thiết kế lại web bán hàng, thành thạo Figma, ngân sách 15-25 triệu, 3 tuần..."
-        ></textarea>
+
+        <label class="dropzone" id="dropzone" for="cvFileInput">
+          <svg class="dropzone__icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M12 15.5V4M12 4l-4 4M12 4l4 4" />
+            <path d="M4.5 15.5v3a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-3" />
+          </svg>
+          <span class="dropzone__text"><strong>Chọn file PDF</strong> hoặc kéo thả CV vào đây</span>
+          <span class="dropzone__hint" id="dropzoneHint">Chỉ nhận file .pdf — CV dạng văn bản (không phải bản scan) đọc tốt nhất</span>
+          <input class="dropzone__input" type="file" id="cvFileInput" accept=".pdf,application/pdf" aria-describedby="dropzoneHint" />
+        </label>
+
+        <div class="file-chip" id="fileChip" hidden>
+          <span class="file-chip__name" id="fileChipName"></span>
+          <span class="file-chip__size" id="fileChipSize"></span>
+          <button type="button" class="file-chip__clear" id="fileChipClear">Chọn file khác</button>
+        </div>
+
         <div class="job-form__actions">
-          <button class="btn btn--primary" id="analyzeBtn" type="button">Phân tích mô tả</button>
-          <span class="job-form__hint">AI chỉ đọc để bóc dữ liệu — không tự động đăng bài giúp bạn.</span>
+          <button class="btn btn--primary" id="uploadBtn" type="button" disabled>Tải CV lên</button>
+          <span class="job-form__hint" id="uploadHintText">AI chỉ đọc để bóc dữ liệu — bạn xem lại trước khi lưu vào hồ sơ.</span>
+          <span class="upload-status" id="uploadStatus" role="status" aria-live="polite" hidden>
+            <span class="upload-status__dot" aria-hidden="true"></span>Đang đọc CV…
+          </span>
         </div>
       </div>
     </div>
@@ -92,41 +106,52 @@
     </div>
   </section>
 
-  <!-- ===================== Analysis result ===================== -->
-  <section class="container" id="analysis-result">
+  <!-- ===================== Parse result ===================== -->
+  <section class="container" id="parse-result">
 
     <!-- status: ok -->
     <div class="panel result-panel" id="resultOk" hidden>
       <div class="panel__frame">
-        <span>Dữ liệu đã bóc</span>
+        <span>Kỹ năng đã bóc từ CV</span>
         <span class="source-badge" id="sourceBadge"></span>
       </div>
       <div class="panel__body jobform">
         <div class="jobform__field">
-          <span class="k">Kỹ năng cần</span>
+          <span class="k">Kỹ năng</span>
           <div class="tag-row" id="resultSkills"></div>
         </div>
-        <div class="jobform__field"><span class="k">Kinh nghiệm tối thiểu</span><span class="v" id="resultExperience">—</span></div>
-        <div class="jobform__field"><span class="k">Ngân sách</span><span class="v" id="resultBudget">—</span></div>
-        <div class="jobform__field"><span class="k">Thời hạn</span><span class="v" id="resultDeadline">—</span></div>
+        <div class="jobform__field"><span class="k">Số năm kinh nghiệm</span><span class="v exp-badge" id="resultExperience">—</span></div>
       </div>
     </div>
 
-    <div class="job-form__actions" id="viewMatchesAction" hidden>
-      <a class="btn btn--primary" href="ket-qua.html">Xem freelancer phù hợp</a>
-      <span class="job-form__hint">Xem danh sách freelancer đã xếp hạng cho công việc này.</span>
+    <!-- status: needs_ai -->
+    <div class="panel notice-panel" id="resultNeedsAi" hidden>
+      <div class="panel__frame">
+        <span>Đã đọc được CV</span>
+        <span class="source-badge" id="sourceBadgeAi"></span>
+      </div>
+      <div class="panel__body">
+        <div class="notice-heading"><span class="mark mark--warn">△</span><strong>Đã đọc được CV nhưng chưa nhận ra kỹ năng cụ thể</strong></div>
+        <p class="notice-reason">Bạn có thể bổ sung kỹ năng thủ công ở bước tiếp theo khi hoàn thiện hồ sơ.</p>
+      </div>
     </div>
 
     <!-- status: needs_more_info -->
-    <div class="panel notice-panel" id="resultNotice" hidden>
-      <div class="panel__frame"><span>Mô tả chưa đủ rõ</span><span>Cần bổ sung</span></div>
+    <div class="panel notice-panel" id="resultNeedsMoreInfo" hidden>
+      <div class="panel__frame"><span>Chưa đọc được nội dung</span><span>Cần bổ sung</span></div>
       <div class="panel__body">
-        <div class="notice-heading">
-          <span class="mark mark--warn">△</span>
-          <strong>Cần bạn mô tả rõ hơn một chút</strong>
-        </div>
-        <p class="notice-reason" id="noticeReason"></p>
-        <ul class="notice-list" id="noticeMissingList"></ul>
+        <div class="notice-heading"><span class="mark mark--warn">△</span><strong>CV có thể là bản scan</strong></div>
+        <p class="notice-reason">Hệ thống chưa đọc được chữ. Vui lòng tải lên PDF dạng văn bản.</p>
+        <p class="notice-reason" id="needsMoreInfoDetail"></p>
+      </div>
+    </div>
+
+    <!-- status: error -->
+    <div class="panel notice-panel" id="resultError" hidden>
+      <div class="panel__frame"><span>Không xử lý được file</span><span>Lỗi</span></div>
+      <div class="panel__body">
+        <div class="notice-heading"><span class="mark mark--error">✕</span><strong>Có lỗi khi đọc CV</strong></div>
+        <p class="notice-reason" id="errorReason"></p>
       </div>
     </div>
 
@@ -190,9 +215,10 @@
   var cmdkList = document.getElementById("cmdkList");
 
   var commands = [
-    { label: "Mô tả công việc", hint: "Phần", href: "#job-compose" },
-    { label: "Kết quả phân tích", hint: "Phần", href: "#analysis-result" },
+    { label: "Tải CV lên", hint: "Phần", href: "#upload" },
+    { label: "Kết quả phân tích", hint: "Phần", href: "#parse-result" },
     { label: "Trang chủ", hint: "Điều hướng", href: "index.html" },
+    { label: "Đăng công việc", hint: "Điều hướng", href: "dang-job.html" },
     { label: "Cách hoạt động", hint: "Điều hướng", href: "index.html#how" }
   ];
 
@@ -266,126 +292,165 @@
     }
   });
 
-  /* ===================== Phân tích mô tả — POST /api/extract ===================== */
+  /* ===================== Tải CV lên — POST /api/parse-resume ===================== */
 
   var API_BASE = "http://127.0.0.1:8000";
 
-  var textarea = document.getElementById("jobDescInput");
-  var analyzeBtn = document.getElementById("analyzeBtn");
+  var dropzone = document.getElementById("dropzone");
+  var fileInput = document.getElementById("cvFileInput");
+  var fileChip = document.getElementById("fileChip");
+  var fileChipName = document.getElementById("fileChipName");
+  var fileChipSize = document.getElementById("fileChipSize");
+  var fileChipClear = document.getElementById("fileChipClear");
+
+  var uploadBtn = document.getElementById("uploadBtn");
+  var uploadStatus = document.getElementById("uploadStatus");
+  var uploadHintText = document.getElementById("uploadHintText");
   var errorBanner = document.getElementById("apiErrorBanner");
+
   var resultOk = document.getElementById("resultOk");
-  var resultNotice = document.getElementById("resultNotice");
-  var viewMatchesAction = document.getElementById("viewMatchesAction");
+  var resultNeedsAi = document.getElementById("resultNeedsAi");
+  var resultNeedsMoreInfo = document.getElementById("resultNeedsMoreInfo");
+  var resultError = document.getElementById("resultError");
 
   var SOURCE_LABELS = {
-    tier1_algorithm: { text: "Xử lý bằng thuật toán (không dùng AI)", cls: "" },
-    tier2_ai: { text: "Xử lý bằng AI (mô tả cần suy luận thêm)", cls: "source-badge--ai" }
+    tier1_algorithm: "Xử lý bằng thuật toán (không dùng AI)",
+    pdf_reader: "Đọc trực tiếp từ file PDF"
   };
 
-  function trieu(dong) { return Math.round(dong / 1e6); }
+  var selectedFile = null;
 
-  function formatBudget(min, max, currency) {
-    if (min == null && max == null) return "Chưa xác định";
-    if (currency === "VND") {
-      var a = min != null ? trieu(min) : null;
-      var b = max != null ? trieu(max) : null;
-      if (a != null && b != null && a !== b) return a + "–" + b + " triệu ₫";
-      return (a != null ? a : b) + " triệu ₫";
-    }
-    if (currency === "USD") {
-      if (min != null && max != null && min !== max) return "$" + min + "–$" + max;
-      return "$" + (min != null ? min : max);
-    }
-    if (min != null && max != null && min !== max) return min + "–" + max;
-    return String(min != null ? min : max);
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
   }
 
-  function resetPanels() {
+  function resetResultPanels() {
     resultOk.hidden = true;
-    resultNotice.hidden = true;
+    resultNeedsAi.hidden = true;
+    resultNeedsMoreInfo.hidden = true;
+    resultError.hidden = true;
     errorBanner.hidden = true;
-    viewMatchesAction.hidden = true;
+  }
+
+  function showError(reason) {
+    resetResultPanels();
+    document.getElementById("errorReason").textContent = reason || "Không đọc được file. Vui lòng thử lại.";
+    resultError.hidden = false;
+  }
+
+  function setSelectedFile(file) {
+    if (!file) return;
+    if (!/\.pdf$/i.test(file.name)) {
+      selectedFile = null;
+      fileChip.hidden = true;
+      uploadBtn.disabled = true;
+      showError("Chỉ nhận file PDF.");
+      return;
+    }
+    selectedFile = file;
+    fileChipName.textContent = file.name;
+    fileChipSize.textContent = formatSize(file.size);
+    fileChip.hidden = false;
+    uploadBtn.disabled = false;
+    resetResultPanels();
+  }
+
+  fileInput.addEventListener("change", function () {
+    setSelectedFile(fileInput.files && fileInput.files[0]);
+  });
+
+  ["dragover", "dragenter"].forEach(function (evt) {
+    dropzone.addEventListener(evt, function (e) {
+      e.preventDefault();
+      dropzone.classList.add("is-dragover");
+    });
+  });
+  ["dragleave", "dragend"].forEach(function (evt) {
+    dropzone.addEventListener(evt, function () {
+      dropzone.classList.remove("is-dragover");
+    });
+  });
+  dropzone.addEventListener("drop", function (e) {
+    e.preventDefault();
+    dropzone.classList.remove("is-dragover");
+    var file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (file) setSelectedFile(file);
+  });
+
+  fileChipClear.addEventListener("click", function () {
+    selectedFile = null;
+    fileInput.value = "";
+    fileChip.hidden = true;
+    uploadBtn.disabled = true;
+    resetResultPanels();
+  });
+
+  function setLoading(isLoading) {
+    uploadBtn.disabled = isLoading || !selectedFile;
+    uploadStatus.hidden = !isLoading;
+    uploadHintText.hidden = isLoading;
   }
 
   function renderOk(data) {
-    var badge = SOURCE_LABELS[data.source] || { text: data.source || "—", cls: "" };
-    var sourceBadge = document.getElementById("sourceBadge");
-    sourceBadge.textContent = badge.text;
-    sourceBadge.className = "source-badge" + (badge.cls ? " " + badge.cls : "");
-
     var e = data.extracted || {};
+    document.getElementById("sourceBadge").textContent = SOURCE_LABELS[data.source] || data.source || "";
 
     var skillsWrap = document.getElementById("resultSkills");
     skillsWrap.innerHTML = "";
-    if (e.required_skills && e.required_skills.length) {
-      e.required_skills.forEach(function (skill) {
-        var span = document.createElement("span");
-        span.className = "tag";
-        span.textContent = skill;
-        skillsWrap.appendChild(span);
-      });
-    } else {
-      var none = document.createElement("span");
-      none.className = "v";
-      none.textContent = "Chưa xác định";
-      skillsWrap.appendChild(none);
-    }
+    (e.skills || []).forEach(function (skill) {
+      var span = document.createElement("span");
+      span.className = "tag";
+      span.textContent = skill;
+      skillsWrap.appendChild(span);
+    });
 
     document.getElementById("resultExperience").textContent =
-      e.min_experience_years != null ? e.min_experience_years + " năm" : "Chưa xác định";
-    document.getElementById("resultBudget").textContent =
-      formatBudget(e.budget_min, e.budget_max, e.currency);
-    document.getElementById("resultDeadline").textContent =
-      e.deadline_weeks != null ? e.deadline_weeks + " tuần" : "Chưa xác định";
+      e.experience_years != null ? e.experience_years + " năm" : "Chưa xác định";
 
     resultOk.hidden = false;
-    viewMatchesAction.hidden = false;
   }
 
-  function renderNotice(data) {
-    document.getElementById("noticeReason").textContent = data.reason || "Mô tả chưa đủ chi tiết để bóc tách dữ liệu.";
-    var list = document.getElementById("noticeMissingList");
-    list.innerHTML = "";
-    (data.still_missing || []).forEach(function (item) {
-      var li = document.createElement("li");
-      li.textContent = item;
-      list.appendChild(li);
-    });
-    resultNotice.hidden = false;
+  function renderNeedsAi(data) {
+    document.getElementById("sourceBadgeAi").textContent = SOURCE_LABELS[data.source] || data.source || "";
+    resultNeedsAi.hidden = false;
   }
 
-  function setLoading(isLoading) {
-    analyzeBtn.disabled = isLoading;
-    analyzeBtn.textContent = isLoading ? "Đang phân tích…" : "Phân tích mô tả";
+  function renderNeedsMoreInfo(data) {
+    document.getElementById("needsMoreInfoDetail").textContent = data.reason || "";
+    resultNeedsMoreInfo.hidden = false;
   }
 
-  analyzeBtn.addEventListener("click", function () {
-    var text = textarea.value.trim();
-    if (!text) {
-      textarea.focus();
-      return;
-    }
+  uploadBtn.addEventListener("click", function () {
+    if (!selectedFile) return;
 
-    resetPanels();
+    resetResultPanels();
     setLoading(true);
 
-    fetch(API_BASE + "/api/extract", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: text })
-    })
+    var formData = new FormData();
+    formData.append("file", selectedFile);
+
+    fetch(API_BASE + "/api/parse-resume", { method: "POST", body: formData })
       .then(function (r) {
-        if (!r.ok) throw new Error("extract");
+        if (!r.ok) throw new Error("parse-resume");
         return r.json();
       })
       .then(function (data) {
-        if (data.status === "needs_more_info") {
-          renderNotice(data);
-        } else {
+        if (data.status === "ok") {
           renderOk(data);
+        } else if (data.status === "needs_ai") {
+          renderNeedsAi(data);
+        } else if (data.status === "needs_more_info") {
+          renderNeedsMoreInfo(data);
+        } else if (data.status === "error") {
+          showError(data.reason);
+        } else {
+          showError("Không nhận diện được phản hồi từ hệ thống.");
         }
       })
       .catch(function () {
+        resetResultPanels();
         errorBanner.hidden = false;
       })
       .finally(function () {
